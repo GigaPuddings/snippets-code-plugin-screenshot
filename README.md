@@ -1,8 +1,24 @@
-# Screenshot, OCR, and Pins
+# Screenshot and OCR
 
-Official installable package for screenshot annotation, OCR entry points, color picking, and pin windows.
+Official installable plugin package for Snippets Code.
 
-Snippets Code can install this plugin directly from the repository archive.
+- Plugin ID: `screenshot`
+- Version: `1.5.6`
+- Source: `docs/plugin-packages/screenshot`
+- App compatibility: `>=1.5.6`
 
-Install URL: https://github.com/GigaPuddings/snippets-code-plugin-screenshot/archive/refs/heads/main.zip
+Install URL:
 
+```text
+https://github.com/GigaPuddings/snippets-code-plugin-screenshot/archive/refs/heads/main.zip
+```
+
+Versioned release URL:
+
+```text
+https://github.com/GigaPuddings/snippets-code-plugin-screenshot/archive/refs/tags/v1.5.6.zip
+```
+
+This repository is synchronized from the main application repository by
+`pnpm plugins:sync-repos`. Manual edits should be made in the main source
+package, then synchronized again.
