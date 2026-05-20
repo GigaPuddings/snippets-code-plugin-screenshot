@@ -7886,12 +7886,12 @@ const hd = () => {
     target: "window",
     path: "/screenshot",
     name: "Screenshot",
-    component: /* @__PURE__ */ xr(() => import("./index-BBxv7SzT.js"))
+    component: /* @__PURE__ */ xr(() => import("./index-BrhHKR6T.js"))
   }), e.registerRoute({
     target: "window",
     path: "/pin",
     name: "Pin",
-    component: /* @__PURE__ */ xr(() => import("./index-CktQA1_4.js"))
+    component: /* @__PURE__ */ xr(() => import("./index-arlw_aF-.js"))
   });
 };
 export {
@@ -7927,15 +7927,15 @@ export {
   yo as f,
   zf as g,
   gn as h,
-  ws as i,
-  Jf as j,
-  Jn as k,
-  zs as l,
-  Of as m,
+  Bs as i,
+  ws as j,
+  Jf as k,
+  Jn as l,
+  zs as m,
   hn as n,
   Kn as o,
-  fd as p,
-  Bs as q,
+  Of as p,
+  fd as q,
   $t as r,
   Ie as s,
   Si as t,
