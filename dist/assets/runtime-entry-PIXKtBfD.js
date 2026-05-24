@@ -7886,12 +7886,12 @@ const hd = () => {
     target: "window",
     path: "/screenshot",
     name: "Screenshot",
-    component: /* @__PURE__ */ xr(() => import("./index-BCmk-4H_.js"))
+    component: /* @__PURE__ */ xr(() => import("./index-BZ13HHAK.js"))
   }), e.registerRoute({
     target: "window",
     path: "/pin",
     name: "Pin",
-    component: /* @__PURE__ */ xr(() => import("./index-DZWr4K85.js"))
+    component: /* @__PURE__ */ xr(() => import("./index-BjcxQ0IC.js"))
   });
 };
 export {
