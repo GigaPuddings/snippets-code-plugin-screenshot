@@ -1,13 +1,13 @@
 var fe = Object.defineProperty;
 var xe = (o, t, e) => t in o ? fe(o, t, { enumerable: !0, configurable: !0, writable: !0, value: e }) : o[t] = e;
 var y = (o, t, e) => xe(o, typeof t != "symbol" ? t + "" : t, e);
-import { c as M, d as ne, r as ht, a as ct, w as Zt, b as K, e as _, f as A, F as Tt, g as Rt, u as ft, n as xt, h as bt, i as Ft, o as j, j as ie, k as we, t as Lt, l as me, m as ye, p as pe, v as ve, q as Gt } from "./runtime-entry-B57bt23Q.js";
-import { l as P, i as q, W as se, o as mt, d as zt, c as Dt, I as kt, u as ke, T as Se, a as be, P as Me, C as Ce, b as Te, _ as oe, e as Vt } from "./_plugin-vue_export-helper-DYunkD4Z.js";
-function rt(o, t) {
+import { c as M, d as ne, r as ht, a as dt, w as Zt, b as K, e as N, f as D, F as Tt, g as Rt, u as xt, n as wt, h as St, i as Vt, o as Z, j as ie, k as we, t as Yt, l as me, m as ye, p as pe, v as ve, q as qt } from "./runtime-entry-CDZDZSB7.js";
+import { l as W, i as j, W as se, o as mt, d as zt, c as Wt, I as kt, u as ke, T as Se, a as be, P as Me, C as Ce, b as Te, _ as oe, e as Nt } from "./_plugin-vue_export-helper-BYXe8loQ.js";
+function lt(o, t) {
   const e = t.x - o.x, n = t.y - o.y;
   return Math.sqrt(e * e + n * n);
 }
-function qt(o, t) {
+function Gt(o, t) {
   return o.x >= t.x && o.x <= t.x + t.width && o.y >= t.y && o.y <= t.y + t.height;
 }
 function Xt(o) {
@@ -52,20 +52,15 @@ class ze {
   // 绘制选择框
   drawSelectionBox(t, e = !0) {
     const { x: n, y: i, width: s, height: a } = t;
-    this.ctx.strokeStyle = "#3b82f6", this.ctx.lineWidth = 2, this.ctx.setLineDash([6, 6]), this.ctx.strokeRect(n, i, s, a), e && (this.drawGuides(t), this.drawHandles(t));
-  }
-  // 绘制辅助线
-  drawGuides(t) {
-    const { x: e, y: n, width: i, height: s } = t;
-    this.ctx.strokeStyle = "#3b82f6", this.ctx.lineWidth = 1, this.ctx.setLineDash([4, 4]);
-    const a = i / 3, r = s / 3;
-    this.ctx.beginPath(), this.ctx.moveTo(e + a, n), this.ctx.lineTo(e + a, n + s), this.ctx.moveTo(e + a * 2, n), this.ctx.lineTo(e + a * 2, n + s), this.ctx.moveTo(e, n + r), this.ctx.lineTo(e + i, n + r), this.ctx.moveTo(e, n + r * 2), this.ctx.lineTo(e + i, n + r * 2), this.ctx.stroke();
+    this.ctx.save();
+    const r = Math.round(n) + 0.5, l = Math.round(i) + 0.5, c = Math.max(0, Math.round(s) - 1), d = Math.max(0, Math.round(a) - 1);
+    this.ctx.lineWidth = 1, this.ctx.setLineDash([4, 3]), this.ctx.strokeStyle = "rgba(0, 0, 0, 0.55)", this.ctx.strokeRect(r + 1, l + 1, c, d), this.ctx.strokeStyle = "#ffffff", this.ctx.strokeRect(r, l, c, d), e && this.drawHandles(t), this.ctx.restore();
   }
   // 绘制控制点
   drawHandles(t) {
     const { x: e, y: n, width: i, height: s } = t, a = Xt(t);
-    this.ctx.setLineDash([]), this.ctx.fillStyle = "#ffffff", this.ctx.strokeStyle = "#3b82f6", this.ctx.lineWidth = 2;
-    const r = 4;
+    this.ctx.setLineDash([]);
+    const r = 5;
     [
       { x: e, y: n },
       // 左上
@@ -84,7 +79,8 @@ class ze {
       { x: e + i, y: a.y }
       // 右中
     ].forEach((c) => {
-      this.ctx.beginPath(), this.ctx.arc(c.x, c.y, r, 0, Math.PI * 2), this.ctx.fill(), this.ctx.stroke();
+      const d = Math.round(c.x) - r / 2, g = Math.round(c.y) - r / 2;
+      this.ctx.fillStyle = "rgba(0, 0, 0, 0.42)", this.ctx.fillRect(d + 1, g + 1, r, r), this.ctx.fillStyle = "#ffffff", this.ctx.fillRect(d, g, r, r);
     });
   }
   // 绘制标注列表
@@ -141,12 +137,12 @@ class ze {
   // 绘制取色器
   drawColorPicker(t, e) {
     if (!t.isActive || !t.isVisible) return;
-    const { mousePosition: n, colorInfo: i, showFormat: s, previewImage: a, zoomFactor: r, isCopied: l } = t, c = 150, u = 190, g = 20;
+    const { mousePosition: n, colorInfo: i, showFormat: s, previewImage: a, zoomFactor: r, isCopied: l } = t, c = 156, d = 188, g = 18;
     let w = n.x + g, p = n.y + g;
-    w + c > e.x + e.width && (w = n.x - c - g), p + u > e.y + e.height && (p = n.y - u - g), w < e.x && (w = e.x + g), p < e.y && (p = e.y + g), this.ctx.save(), this.ctx.fillStyle = "rgba(255, 255, 255, 0.9)", this.ctx.strokeStyle = "rgba(0, 0, 0, 0.1)", this.ctx.lineWidth = 1, this.ctx.shadowColor = "rgba(0, 0, 0, 0.2)", this.ctx.shadowBlur = 10, this.ctx.beginPath(), this.ctx.roundRect(w, p, c, u, 8), this.ctx.fill(), this.ctx.stroke(), this.ctx.shadowColor = "transparent";
-    const x = 100, v = w + (c - x) / 2, R = p + 15;
-    this.ctx.strokeStyle = "#ccc", this.ctx.lineWidth = 1, this.ctx.strokeRect(v, R, x, x);
-    const $ = a ? a.width : r, H = x / $;
+    w + c > e.x + e.width && (w = n.x - c - g), p + d > e.y + e.height && (p = n.y - d - g), w < e.x && (w = e.x + g), p < e.y && (p = e.y + g), this.ctx.save(), this.ctx.fillStyle = "rgba(250, 250, 250, 0.96)", this.ctx.strokeStyle = "rgba(0, 0, 0, 0.14)", this.ctx.lineWidth = 1, this.ctx.shadowColor = "rgba(0, 0, 0, 0.24)", this.ctx.shadowBlur = 18, this.ctx.shadowOffsetY = 8, this.ctx.beginPath(), this.ctx.roundRect(w, p, c, d, 10), this.ctx.fill(), this.ctx.stroke(), this.ctx.shadowColor = "transparent", this.ctx.shadowBlur = 0, this.ctx.shadowOffsetY = 0;
+    const x = 108, v = w + (c - x) / 2, C = p + 16;
+    this.ctx.fillStyle = "#f3f4f6", this.ctx.fillRect(v, C, x, x), this.ctx.strokeStyle = "rgba(0, 0, 0, 0.26)", this.ctx.lineWidth = 1, this.ctx.strokeRect(v, C, x, x);
+    const E = a ? a.width : r, A = x / E;
     a && (this.ctx.imageSmoothingEnabled = !1, this.ctx.drawImage(
       a,
       0,
@@ -154,31 +150,45 @@ class ze {
       a.width,
       a.height,
       v,
-      R,
+      C,
       x,
       x
-    ), this.ctx.imageSmoothingEnabled = !0);
-    const b = Math.floor($ / 2), L = v + b * H, D = R + b * H;
-    this.ctx.strokeStyle = "rgba(255, 255, 255, 0.9)", this.ctx.lineWidth = 2, this.ctx.strokeRect(
-      L - 1,
-      D - 1,
-      H + 2,
-      H + 2
-    ), this.ctx.strokeStyle = "rgba(0, 0, 0, 0.8)", this.ctx.lineWidth = 1, this.ctx.strokeRect(
-      L,
-      D,
-      H,
-      H
-    ), this.ctx.fillStyle = "#333", this.ctx.font = '12px "SF Mono", "Consolas", "Monaco", monospace';
-    let W = R + x + 25;
-    if (i) {
-      this.ctx.fillStyle = i.hex, this.ctx.fillRect(w + 15, W - 13, 16, 16), this.ctx.strokeStyle = "#ccc", this.ctx.strokeRect(w + 15, W - 13, 16, 16), this.ctx.fillStyle = "#333";
-      const z = s === "hex" ? i.hex : `${i.rgb.r}, ${i.rgb.g}, ${i.rgb.b}`;
-      this.ctx.fillText(z, w + 40, W), W += 20;
+    ), this.ctx.imageSmoothingEnabled = !0), this.ctx.beginPath(), this.ctx.strokeStyle = "rgba(255, 255, 255, 0.5)", this.ctx.lineWidth = 1;
+    for (let T = 1; T < E; T++) {
+      const H = v + T * A;
+      this.ctx.moveTo(H, C), this.ctx.lineTo(H, C + x);
+      const P = C + T * A;
+      this.ctx.moveTo(v, P), this.ctx.lineTo(v + x, P);
     }
-    this.ctx.fillStyle = "#666", this.ctx.font = "12px Arial", this.ctx.fillText(`X: ${Math.round(n.x)}, Y: ${Math.round(n.y)}`, w + 15, W), W += 20, this.ctx.font = "12px Arial";
-    const Y = l ? "已复制!" : "Q:复制 Shift:切换";
-    this.ctx.fillStyle = l ? "#00A000" : "#888", this.ctx.fillText(Y, w + 15, W), this.ctx.restore();
+    this.ctx.stroke(), this.ctx.beginPath(), this.ctx.strokeStyle = "rgba(0, 0, 0, 0.22)";
+    for (let T = 1; T < E; T++) {
+      const H = v + T * A + 0.5;
+      this.ctx.moveTo(H, C), this.ctx.lineTo(H, C + x);
+      const P = C + T * A + 0.5;
+      this.ctx.moveTo(v, P), this.ctx.lineTo(v + x, P);
+    }
+    this.ctx.stroke();
+    const b = Math.floor(E / 2), I = v + b * A, L = C + b * A;
+    this.ctx.fillStyle = "rgba(255, 255, 255, 0.18)", this.ctx.fillRect(I, L, A, A), this.ctx.setLineDash([]), this.ctx.strokeStyle = "rgba(255, 255, 255, 0.96)", this.ctx.lineWidth = 4, this.ctx.strokeRect(
+      I - 1,
+      L - 1,
+      A + 2,
+      A + 2
+    ), this.ctx.strokeStyle = "rgba(0, 0, 0, 0.9)", this.ctx.lineWidth = 2, this.ctx.strokeRect(
+      I,
+      L,
+      A,
+      A
+    ), this.ctx.fillStyle = "#333", this.ctx.font = '12px "SF Mono", "Consolas", "Monaco", monospace';
+    let B = C + x + 22;
+    if (i) {
+      this.ctx.fillStyle = i.hex, this.ctx.fillRect(w + 16, B - 14, 20, 20), this.ctx.strokeStyle = "rgba(0, 0, 0, 0.22)", this.ctx.strokeRect(w + 16, B - 14, 20, 20), this.ctx.fillStyle = "#111827", this.ctx.font = '12px "SF Mono", "Consolas", "Monaco", monospace';
+      const T = s === "hex" ? i.hex : `${i.rgb.r}, ${i.rgb.g}, ${i.rgb.b}`;
+      this.ctx.fillText(T, w + 44, B), B += 19;
+    }
+    this.ctx.fillStyle = "#6b7280", this.ctx.font = "12px Arial", this.ctx.fillText(`X: ${Math.round(n.x)}, Y: ${Math.round(n.y)}`, w + 16, B), B += 17, this.ctx.font = "12px Arial";
+    const F = l ? "已复制!" : "Q:复制 Shift:切换";
+    this.ctx.fillStyle = l ? "#059669" : "#8b8f98", this.ctx.fillText(F, w + 16, B), this.ctx.restore();
   }
 }
 class Ae {
@@ -284,38 +294,38 @@ class Ae {
   }
   // 计算两点间距离（使用工具函数）
   distance(t, e) {
-    return rt(t, e);
+    return lt(t, e);
   }
   // 检查点是否在矩形内（使用工具函数）
   isPointInRect(t, e, n = 0) {
     if (!pt(t) || !At(e))
       return !1;
     if (n === 0)
-      return qt(t, e);
+      return Gt(t, e);
     const i = {
       x: e.x - n,
       y: e.y - n,
       width: e.width + n * 2,
       height: e.height + n * 2
     };
-    return qt(t, i);
+    return Gt(t, i);
   }
   // 检查点是否在线段附近
   isPointNearLine(t, e, n, i = 8) {
     if (!pt(t) || !pt(e) || !pt(n))
       return !1;
-    const s = t.x - e.x, a = t.y - e.y, r = n.x - e.x, l = n.y - e.y, c = s * r + a * l, u = r * r + l * l;
-    if (u === 0)
-      return rt(t, e) <= i;
-    const g = c / u;
+    const s = t.x - e.x, a = t.y - e.y, r = n.x - e.x, l = n.y - e.y, c = s * r + a * l, d = r * r + l * l;
+    if (d === 0)
+      return lt(t, e) <= i;
+    const g = c / d;
     let w;
     return g < 0 ? w = e : g > 1 ? w = n : w = {
       x: e.x + g * r,
       y: e.y + g * l
-    }, rt(t, w) <= i;
+    }, lt(t, w) <= i;
   }
 }
-var m = /* @__PURE__ */ ((o) => (o.None = "none", o.Drawing = "drawing", o.Moving = "moving", o.ResizingNW = "resizing-nw", o.ResizingNE = "resizing-ne", o.ResizingSW = "resizing-sw", o.ResizingSE = "resizing-se", o.ResizingN = "resizing-n", o.ResizingS = "resizing-s", o.ResizingW = "resizing-w", o.ResizingE = "resizing-e", o.DrawingRect = "drawing-rect", o.DrawingArrow = "drawing-arrow", o.DrawingPen = "drawing-pen", o.EditingAnnotation = "editing-annotation", o.MovingAnnotation = "moving-annotation", o.ResizingAnnotationNW = "resizing-annotation-nw", o.ResizingAnnotationSE = "resizing-annotation-se", o.DrawingText = "drawing-text", o.DrawingMosaic = "drawing-mosaic", o.ColorPicking = "color-picking", o.Pinning = "pinning", o))(m || {}), d = /* @__PURE__ */ ((o) => (o.Select = "select", o.Rectangle = "rectangle", o.Arrow = "arrow", o.Pen = "pen", o.Mosaic = "mosaic", o.Text = "text", o.ColorPicker = "color-picker", o.Ocr = "ocr", o.Pin = "pin", o.Translate = "translate", o))(d || {});
+var m = /* @__PURE__ */ ((o) => (o.None = "none", o.Drawing = "drawing", o.Moving = "moving", o.ResizingNW = "resizing-nw", o.ResizingNE = "resizing-ne", o.ResizingSW = "resizing-sw", o.ResizingSE = "resizing-se", o.ResizingN = "resizing-n", o.ResizingS = "resizing-s", o.ResizingW = "resizing-w", o.ResizingE = "resizing-e", o.DrawingRect = "drawing-rect", o.DrawingArrow = "drawing-arrow", o.DrawingPen = "drawing-pen", o.EditingAnnotation = "editing-annotation", o.MovingAnnotation = "moving-annotation", o.ResizingAnnotationNW = "resizing-annotation-nw", o.ResizingAnnotationSE = "resizing-annotation-se", o.DrawingText = "drawing-text", o.DrawingMosaic = "drawing-mosaic", o.ColorPicking = "color-picking", o.Pinning = "pinning", o))(m || {}), u = /* @__PURE__ */ ((o) => (o.Select = "select", o.Rectangle = "rectangle", o.Arrow = "arrow", o.Pen = "pen", o.Mosaic = "mosaic", o.Text = "text", o.ColorPicker = "color-picker", o.Ocr = "ocr", o.Pin = "pin", o.Translate = "translate", o))(u || {});
 class Pe {
   constructor(t, e) {
     y(this, "coordinateSystem");
@@ -337,10 +347,10 @@ class Pe {
   }
   getOperationType(t, e, n, i) {
     const s = this.getAnnotationAtPoint(t, i);
-    if (e !== d.Select)
+    if (e !== u.Select)
       return n ? this.coordinateSystem.isPointInRect(t, n) ? this.getDrawingOperationType(e) : m.None : m.Drawing;
     if (s) {
-      if (s.getData().type === d.Mosaic)
+      if (s.getData().type === u.Mosaic)
         return m.None;
       const a = this.getAnnotationControlPointOperation(t, s);
       return a !== m.None ? a : m.MovingAnnotation;
@@ -350,16 +360,16 @@ class Pe {
   // 获取绘图操作类型
   getDrawingOperationType(t) {
     return {
-      [d.Rectangle]: m.DrawingRect,
-      [d.Arrow]: m.DrawingArrow,
-      [d.Pen]: m.DrawingPen,
-      [d.Text]: m.DrawingText,
-      [d.Mosaic]: m.DrawingMosaic,
-      [d.ColorPicker]: m.ColorPicking,
-      [d.Ocr]: m.None,
-      [d.Pin]: m.Pinning,
-      [d.Translate]: m.None,
-      [d.Select]: m.None
+      [u.Rectangle]: m.DrawingRect,
+      [u.Arrow]: m.DrawingArrow,
+      [u.Pen]: m.DrawingPen,
+      [u.Text]: m.DrawingText,
+      [u.Mosaic]: m.DrawingMosaic,
+      [u.ColorPicker]: m.ColorPicking,
+      [u.Ocr]: m.None,
+      [u.Pin]: m.Pinning,
+      [u.Translate]: m.None,
+      [u.Select]: m.None
     }[t] || m.Drawing;
   }
   // 获取选择框操作类型
@@ -388,10 +398,10 @@ class Pe {
     if (!pt(t))
       return m.None;
     const n = e.getData();
-    if (n.type === d.Mosaic || n.type === d.Text)
+    if (n.type === u.Mosaic || n.type === u.Text)
       return m.None;
-    if ((n.type === d.Rectangle || n.type === d.Arrow) && n.points.length >= 2) {
-      const i = n.points[0], s = n.points[n.points.length - 1], a = 8, r = 6, l = rt(t, i), c = rt(t, s);
+    if ((n.type === u.Rectangle || n.type === u.Arrow) && n.points.length >= 2) {
+      const i = n.points[0], s = n.points[n.points.length - 1], a = 8, r = 6, l = lt(t, i), c = lt(t, s);
       if (l <= a + r)
         return m.ResizingAnnotationNW;
       if (c <= a + r)
@@ -425,7 +435,7 @@ class Pe {
     this.lastMousePos = t;
   }
 }
-class It {
+class Bt {
   constructor(t) {
     y(this, "data");
     this.data = t;
@@ -461,11 +471,11 @@ class It {
     return Math.random().toString(36).substr(2, 9);
   }
 }
-class De extends It {
+class De extends Bt {
   constructor(t, e) {
     super({
       id: Math.random().toString(36).substr(2, 9),
-      type: d.Rectangle,
+      type: u.Rectangle,
       points: [t],
       style: e
     });
@@ -517,7 +527,7 @@ class De extends It {
     if (!this.data.selected || this.data.points.length < 2) return null;
     for (let n = 0; n < this.data.points.length; n++) {
       const i = this.data.points[n];
-      if (rt(t, i) <= e)
+      if (lt(t, i) <= e)
         return n;
     }
     return null;
@@ -527,11 +537,11 @@ class De extends It {
     t >= 0 && t < this.data.points.length && (this.data.points[t] = e);
   }
 }
-class Le extends It {
+class Le extends Bt {
   constructor(t, e) {
     super({
       id: Math.random().toString(36).substr(2, 9),
-      type: d.Arrow,
+      type: u.Arrow,
       points: [t],
       style: e
     });
@@ -558,13 +568,13 @@ class Le extends It {
       y: s.y * e - n.y
     };
     t.save(), t.strokeStyle = this.data.style.color, t.lineWidth = this.data.style.lineWidth * e, t.lineCap = "round", t.lineJoin = "round", t.setLineDash([]), t.beginPath(), t.moveTo(a.x, a.y), t.lineTo(r.x, r.y), t.stroke();
-    const l = Math.atan2(s.y - i.y, s.x - i.x), c = 15 * e, u = Math.PI / 6;
+    const l = Math.atan2(s.y - i.y, s.x - i.x), c = 15 * e, d = Math.PI / 6;
     t.beginPath(), t.moveTo(r.x, r.y), t.lineTo(
-      r.x - c * Math.cos(l - u),
-      r.y - c * Math.sin(l - u)
+      r.x - c * Math.cos(l - d),
+      r.y - c * Math.sin(l - d)
     ), t.moveTo(r.x, r.y), t.lineTo(
-      r.x - c * Math.cos(l + u),
-      r.y - c * Math.sin(l + u)
+      r.x - c * Math.cos(l + d),
+      r.y - c * Math.sin(l + d)
     ), t.stroke(), t.restore();
   }
   hitTest(t, e = 8) {
@@ -573,15 +583,15 @@ class Le extends It {
     return this.isPointNearLine(t, n, i, e);
   }
   isPointNearLine(t, e, n, i) {
-    const s = t.x - e.x, a = t.y - e.y, r = n.x - e.x, l = n.y - e.y, c = s * r + a * l, u = r * r + l * l;
-    if (u === 0)
-      return rt(t, e) <= i;
-    const g = c / u;
+    const s = t.x - e.x, a = t.y - e.y, r = n.x - e.x, l = n.y - e.y, c = s * r + a * l, d = r * r + l * l;
+    if (d === 0)
+      return lt(t, e) <= i;
+    const g = c / d;
     let w;
     return g < 0 ? w = e : g > 1 ? w = n : w = {
       x: e.x + g * r,
       y: e.y + g * l
-    }, rt(t, w) <= i;
+    }, lt(t, w) <= i;
   }
   getBounds() {
     if (this.data.points.length < 2) return null;
@@ -609,7 +619,7 @@ class Le extends It {
     if (!this.data.selected || this.data.points.length < 2) return null;
     for (let n = 0; n < this.data.points.length; n++) {
       const i = this.data.points[n];
-      if (rt(t, i) <= e)
+      if (lt(t, i) <= e)
         return n;
     }
     return null;
@@ -619,11 +629,11 @@ class Le extends It {
     t >= 0 && t < this.data.points.length && (this.data.points[t] = e);
   }
 }
-class We extends It {
+class We extends Bt {
   constructor(t, e) {
     super({
       id: Math.random().toString(36).substr(2, 9),
-      type: d.Pen,
+      type: u.Pen,
       points: [t],
       style: e
     });
@@ -634,7 +644,7 @@ class We extends It {
   // 智能添加点（带插值）
   addPoint(t) {
     if (this.data.points.length > 0) {
-      const e = this.data.points[this.data.points.length - 1], n = rt(t, e);
+      const e = this.data.points[this.data.points.length - 1], n = lt(t, e);
       if (n > 5) {
         const i = Math.ceil(n / 3);
         for (let s = 1; s < i; s++) {
@@ -660,14 +670,14 @@ class We extends It {
     const i = this.data.points[0], s = i.x * e - n.x, a = i.y * e - n.y;
     t.moveTo(s, a);
     for (let r = 1; r < this.data.points.length; r++) {
-      const l = this.data.points[r], c = l.x * e - n.x, u = l.y * e - n.y;
-      t.lineTo(c, u);
+      const l = this.data.points[r], c = l.x * e - n.x, d = l.y * e - n.y;
+      t.lineTo(c, d);
     }
     t.stroke(), t.restore();
   }
   hitTest(t, e = 8) {
     if (this.data.points.length < 2)
-      return this.data.points.length === 1 ? rt(t, this.data.points[0]) <= e : !1;
+      return this.data.points.length === 1 ? lt(t, this.data.points[0]) <= e : !1;
     for (let n = 0; n < this.data.points.length - 1; n++) {
       const i = this.data.points[n], s = this.data.points[n + 1];
       if (this.isPointNearLine(t, i, s, e))
@@ -676,15 +686,15 @@ class We extends It {
     return !1;
   }
   isPointNearLine(t, e, n, i) {
-    const s = t.x - e.x, a = t.y - e.y, r = n.x - e.x, l = n.y - e.y, c = s * r + a * l, u = r * r + l * l;
-    if (u === 0)
-      return rt(t, e) <= i;
-    const g = c / u;
+    const s = t.x - e.x, a = t.y - e.y, r = n.x - e.x, l = n.y - e.y, c = s * r + a * l, d = r * r + l * l;
+    if (d === 0)
+      return lt(t, e) <= i;
+    const g = c / d;
     let w;
     return g < 0 ? w = e : g > 1 ? w = n : w = {
       x: e.x + g * r,
       y: e.y + g * l
-    }, rt(t, w) <= i;
+    }, lt(t, w) <= i;
   }
   getBounds() {
     if (this.data.points.length === 0) return null;
@@ -713,11 +723,11 @@ class We extends It {
     e.stroke(), e.restore();
   }
 }
-class Ie extends It {
+class Ie extends Bt {
   constructor(t, e, n, i = 16) {
     super({
       id: Math.random().toString(36).substr(2, 9),
-      type: d.Text,
+      type: u.Text,
       points: [t],
       style: n,
       text: e,
@@ -756,8 +766,8 @@ class Ie extends It {
     const n = this.data.points[0], i = this.data.fontSize || 16, a = document.createElement("canvas").getContext("2d");
     if (!a) return !1;
     a.font = `${i}px sans-serif`;
-    const l = a.measureText(this.data.text).width, c = n.x + 4, u = n.y - 8;
-    return t.x >= c - e && t.x <= c + l + e && t.y >= u - e && t.y <= u + i + e;
+    const l = a.measureText(this.data.text).width, c = n.x + 4, d = n.y - 8;
+    return t.x >= c - e && t.x <= c + l + e && t.y >= d - e && t.y <= d + i + e;
   }
   getBounds() {
     if (!this.data.text || this.data.points.length === 0) return null;
@@ -776,15 +786,15 @@ class Ie extends It {
     if (!this.data.text || this.data.points.length === 0) return;
     const { ctx: e, scale: n, offset: i } = t, s = this.data.points[0], a = (this.data.fontSize || 16) * n, r = (s.x + 4) * n - i.x, l = (s.y - 8) * n - i.y;
     e.save(), e.font = `${a}px sans-serif`;
-    const u = e.measureText(this.data.text).width;
-    e.setLineDash([2, 2]), e.strokeStyle = "#3b82f6", e.lineWidth = 1, e.strokeRect(r, l, u, a), e.restore();
+    const d = e.measureText(this.data.text).width;
+    e.setLineDash([2, 2]), e.strokeStyle = "#3b82f6", e.lineWidth = 1, e.strokeRect(r, l, d, a), e.restore();
   }
   drawHover(t) {
     if (!this.data.text || this.data.points.length === 0) return;
     const { ctx: e, scale: n, offset: i } = t, s = this.data.points[0], a = (this.data.fontSize || 16) * n, r = (s.x + 4) * n - i.x, l = (s.y - 8) * n - i.y;
     e.save(), e.font = `${a}px sans-serif`;
-    const u = e.measureText(this.data.text).width;
-    e.strokeStyle = "#3b82f6", e.lineWidth = 2, e.setLineDash([4, 4]), e.strokeRect(r, l, u, a), e.restore();
+    const d = e.measureText(this.data.text).width;
+    e.strokeStyle = "#3b82f6", e.lineWidth = 2, e.setLineDash([4, 4]), e.strokeRect(r, l, d, a), e.restore();
   }
   // 获取文字内容
   getText() {
@@ -803,11 +813,11 @@ class Ie extends It {
     return this.data.points.length >= this.getMinPoints() && !this.isEmpty();
   }
 }
-const vt = class vt extends It {
+const vt = class vt extends Bt {
   constructor(t, e, n = 5) {
     super({
       id: Math.random().toString(36).substr(2, 9),
-      type: d.Mosaic,
+      type: u.Mosaic,
       points: [t],
       style: e,
       mosaicSize: n,
@@ -820,7 +830,7 @@ const vt = class vt extends It {
   }
   addPoint(t) {
     if (this.data.points.length > 0) {
-      const e = this.data.points[this.data.points.length - 1], n = rt(t, e);
+      const e = this.data.points[this.data.points.length - 1], n = lt(t, e);
       if (n > 2) {
         const i = Math.ceil(n / 2);
         for (let s = 1; s < i; s++) {
@@ -847,44 +857,44 @@ const vt = class vt extends It {
    */
   renderRealMosaic(t, e, n, i) {
     vt.helperCanvas || (vt.helperCanvas = document.createElement("canvas"), vt.helperCtx = vt.helperCanvas.getContext("2d", { willReadFrequently: !0 }));
-    const s = vt.helperCanvas, a = vt.helperCtx, r = e || 1, l = this.data.mosaicSize || 5, c = Math.max(Math.round(l * r), 2), u = l * 3, g = this.getBounds();
+    const s = vt.helperCanvas, a = vt.helperCtx, r = e || 1, l = this.data.mosaicSize || 5, c = Math.max(Math.round(l * r), 2), d = l * 3, g = this.getBounds();
     if (!g) return;
-    const w = u, p = Math.floor(g.x - w), x = Math.floor(g.y - w), v = Math.ceil(g.width + w * 2), R = Math.ceil(g.height + w * 2);
-    if (v <= 0 || R <= 0) return;
-    const $ = Math.floor(p * r - n.x), H = Math.floor(x * r - n.y), b = Math.ceil(v * r), L = Math.ceil(R * r), D = t.canvas.width, W = t.canvas.height, Y = Math.max(0, $), z = Math.max(0, H), N = Math.min(b, D - Y), E = Math.min(L, W - z);
-    if (N <= 0 || E <= 0) return;
-    let O;
+    const w = d, p = Math.floor(g.x - w), x = Math.floor(g.y - w), v = Math.ceil(g.width + w * 2), C = Math.ceil(g.height + w * 2);
+    if (v <= 0 || C <= 0) return;
+    const E = Math.floor(p * r - n.x), A = Math.floor(x * r - n.y), b = Math.ceil(v * r), I = Math.ceil(C * r), L = t.canvas.width, B = t.canvas.height, F = Math.max(0, E), T = Math.max(0, A), H = Math.min(b, L - F), P = Math.min(I, B - T);
+    if (H <= 0 || P <= 0) return;
+    let V;
     try {
-      t.save(), t.setTransform(1, 0, 0, 1, 0, 0), O = t.getImageData(Y, z, N, E), t.restore();
+      t.save(), t.setTransform(1, 0, 0, 1, 0, 0), V = t.getImageData(F, T, H, P), t.restore();
     } catch {
       return;
     }
-    const U = O.data, V = Y % c, ot = z % c;
-    for (let X = -ot; X < E; X += c)
-      for (let T = -V; T < N; T += c) {
-        const B = Math.max(0, T), tt = Math.max(0, X), nt = Math.min(N, T + c), S = Math.min(E, X + c);
-        if (B >= nt || tt >= S) continue;
-        let J = 0, C = 0, dt = 0, at = 0;
-        for (let wt = tt; wt < S; wt++)
-          for (let st = B; st < nt; st++) {
-            const ut = (wt * N + st) * 4;
-            J += U[ut], C += U[ut + 1], dt += U[ut + 2], at++;
+    const U = V.data, Y = F % c, st = T % c;
+    for (let X = -st; X < P; X += c)
+      for (let z = -Y; z < H; z += c) {
+        const O = Math.max(0, z), Q = Math.max(0, X), tt = Math.min(H, z + c), S = Math.min(P, X + c);
+        if (O >= tt || Q >= S) continue;
+        let q = 0, R = 0, gt = 0, yt = 0;
+        for (let nt = Q; nt < S; nt++)
+          for (let ct = O; ct < tt; ct++) {
+            const ft = (nt * H + ct) * 4;
+            q += U[ft], R += U[ft + 1], gt += U[ft + 2], yt++;
           }
-        if (at > 0) {
-          J = Math.round(J / at), C = Math.round(C / at), dt = Math.round(dt / at);
-          for (let wt = tt; wt < S; wt++)
-            for (let st = B; st < nt; st++) {
-              const ut = (wt * N + st) * 4;
-              U[ut] = J, U[ut + 1] = C, U[ut + 2] = dt;
+        if (yt > 0) {
+          q = Math.round(q / yt), R = Math.round(R / yt), gt = Math.round(gt / yt);
+          for (let nt = Q; nt < S; nt++)
+            for (let ct = O; ct < tt; ct++) {
+              const ft = (nt * H + ct) * 4;
+              U[ft] = q, U[ft + 1] = R, U[ft + 2] = gt;
             }
         }
       }
-    s.width = N, s.height = E, a.putImageData(O, 0, 0), a.globalCompositeOperation = "destination-in", a.lineCap = "round", a.lineJoin = "round", a.lineWidth = u * r, a.fillStyle = "#000000", a.strokeStyle = "#000000", this.drawPathPhysical(a, r, n, Y, z), t.save(), t.setTransform(1, 0, 0, 1, 0, 0), i && (t.beginPath(), t.rect(
+    s.width = H, s.height = P, a.putImageData(V, 0, 0), a.globalCompositeOperation = "destination-in", a.lineCap = "round", a.lineJoin = "round", a.lineWidth = d * r, a.fillStyle = "#000000", a.strokeStyle = "#000000", this.drawPathPhysical(a, r, n, F, T), t.save(), t.setTransform(1, 0, 0, 1, 0, 0), i && (t.beginPath(), t.rect(
       i.x * r - n.x,
       i.y * r - n.y,
       i.width * r,
       i.height * r
-    ), t.clip()), t.drawImage(s, Y, z), t.restore();
+    ), t.clip()), t.drawImage(s, F, T), t.restore();
   }
   // 在物理坐标系中绘制路径
   drawPathPhysical(t, e, n, i, s) {
@@ -897,8 +907,8 @@ const vt = class vt extends It {
     } else {
       const l = this.data.points[0];
       t.moveTo(a(l), r(l));
-      for (let u = 1; u < this.data.points.length - 1; u++) {
-        const g = this.data.points[u], w = this.data.points[u + 1], p = (a(g) + a(w)) / 2, x = (r(g) + r(w)) / 2;
+      for (let d = 1; d < this.data.points.length - 1; d++) {
+        const g = this.data.points[d], w = this.data.points[d + 1], p = (a(g) + a(w)) / 2, x = (r(g) + r(w)) / 2;
         t.quadraticCurveTo(a(g), r(g), p, x);
       }
       const c = this.data.points[this.data.points.length - 1];
@@ -908,7 +918,7 @@ const vt = class vt extends It {
   hitTest(t, e = 8) {
     if (this.data.points.length === 0) return !1;
     if (this.data.points.length === 1)
-      return rt(t, this.data.points[0]) <= (this.data.mosaicSize || 5) / 2 + e;
+      return lt(t, this.data.points[0]) <= (this.data.mosaicSize || 5) / 2 + e;
     for (let n = 0; n < this.data.points.length - 1; n++) {
       const i = this.data.points[n], s = this.data.points[n + 1];
       if (this.isPointNearLine(t, i, s, (this.data.mosaicSize || 5) / 2 + e))
@@ -929,9 +939,9 @@ const vt = class vt extends It {
     };
   }
   isPointNearLine(t, e, n, i) {
-    const s = t.x - e.x, a = t.y - e.y, r = n.x - e.x, l = n.y - e.y, c = s * r + a * l, u = r * r + l * l;
+    const s = t.x - e.x, a = t.y - e.y, r = n.x - e.x, l = n.y - e.y, c = s * r + a * l, d = r * r + l * l;
     let g = -1;
-    u !== 0 && (g = c / u);
+    d !== 0 && (g = c / d);
     let w, p;
     g < 0 ? (w = e.x, p = e.y) : g > 1 ? (w = n.x, p = n.y) : (w = e.x + g * r, p = e.y + g * l);
     const x = t.x - w, v = t.y - p;
@@ -950,25 +960,25 @@ const vt = class vt extends It {
 };
 // 缓存离屏 Canvas 以减少 GC 压力（静态复用）
 y(vt, "helperCanvas", null), y(vt, "helperCtx", null);
-let Yt = vt;
-class Et {
+let Ft = vt;
+class Ht {
   static createAnnotation(t, e, n, i = {}) {
     switch (t) {
-      case d.Rectangle:
+      case u.Rectangle:
         return new De(e, n);
-      case d.Arrow:
+      case u.Arrow:
         return new Le(e, n);
-      case d.Pen:
+      case u.Pen:
         return new We(e, n);
-      case d.Text:
+      case u.Text:
         return new Ie(
           e,
           i.text || "",
           n,
           i.fontSize || 16
         );
-      case d.Mosaic:
-        return new Yt(
+      case u.Mosaic:
+        return new Ft(
           e,
           n,
           i.mosaicSize || 5
@@ -1000,49 +1010,49 @@ class Et {
   // 获取工具对应的操作类型
   static getOperationType(t) {
     return {
-      [d.Rectangle]: "drawing-rect",
-      [d.Arrow]: "drawing-arrow",
-      [d.Pen]: "drawing-pen",
-      [d.Text]: "drawing-text",
-      [d.Mosaic]: "drawing-mosaic",
-      [d.Select]: "none"
+      [u.Rectangle]: "drawing-rect",
+      [u.Arrow]: "drawing-arrow",
+      [u.Pen]: "drawing-pen",
+      [u.Text]: "drawing-text",
+      [u.Mosaic]: "drawing-mosaic",
+      [u.Select]: "none"
     }[t] || "none";
   }
   // 检查工具是否为绘图工具
   static isDrawingTool(t) {
-    return t !== d.Select && t !== d.ColorPicker && t !== d.Ocr && t !== d.Pin;
+    return t !== u.Select && t !== u.ColorPicker && t !== u.Ocr && t !== u.Pin;
   }
   // 检查工具是否支持样式设置
   static supportsStyleSettings(t) {
-    return t !== d.Select && t !== d.Mosaic;
+    return t !== u.Select && t !== u.Mosaic;
   }
   // 检查工具是否支持颜色设置
   static supportsColorSettings(t) {
     return [
-      d.Rectangle,
-      d.Arrow,
-      d.Pen,
-      d.Text
+      u.Rectangle,
+      u.Arrow,
+      u.Pen,
+      u.Text
     ].includes(t);
   }
   // 检查工具是否支持线宽设置
   static supportsLineWidthSettings(t) {
     return [
-      d.Rectangle,
-      d.Arrow,
-      d.Pen
+      u.Rectangle,
+      u.Arrow,
+      u.Pen
     ].includes(t);
   }
   // 检查工具是否支持文字大小设置
   static supportsTextSizeSettings(t) {
-    return t === d.Text;
+    return t === u.Text;
   }
   // 检查工具是否支持马赛克大小设置
   static supportsMosaicSizeSettings(t) {
-    return t === d.Mosaic;
+    return t === u.Mosaic;
   }
 }
-const Ct = class Ct {
+const Mt = class Mt {
   constructor() {
     y(this, "pool", []);
     y(this, "maxPoolSize", 5);
@@ -1050,7 +1060,7 @@ const Ct = class Ct {
     y(this, "inUse", /* @__PURE__ */ new Set());
   }
   static getInstance() {
-    return Ct.instance || (Ct.instance = new Ct()), Ct.instance;
+    return Mt.instance || (Mt.instance = new Mt()), Mt.instance;
   }
   /**
    * 获取一个 canvas 对象
@@ -1093,9 +1103,9 @@ const Ct = class Ct {
     };
   }
 };
-y(Ct, "instance");
-let Ut = Ct;
-class Mt {
+y(Mt, "instance");
+let Ut = Mt;
+class bt {
   /**
    * 懒加载 OCR 模块
    */
@@ -1105,7 +1115,7 @@ class Mt {
       return this.loadedModules.get(t);
     if (this.loadingPromises.has(t))
       return this.loadingPromises.get(t);
-    const e = import("./ocr-wFb3CFmf.js").then((n) => (this.loadedModules.set(t, n), this.loadingPromises.delete(t), n));
+    const e = import("./ocr-CzucKXnk.js").then((n) => (this.loadedModules.set(t, n), this.loadingPromises.delete(t), n));
     return this.loadingPromises.set(t, e), e;
   }
   /**
@@ -1117,7 +1127,7 @@ class Mt {
       return this.loadedModules.get(t);
     if (this.loadingPromises.has(t))
       return this.loadingPromises.get(t);
-    const e = import("./offlineTranslator-tlwTz-jd.js").then((n) => (this.loadedModules.set(t, n), this.loadingPromises.delete(t), n));
+    const e = import("./offlineTranslator-DEPXTgir.js").then((n) => (this.loadedModules.set(t, n), this.loadingPromises.delete(t), n));
     return this.loadingPromises.set(t, e), e;
   }
   /**
@@ -1150,15 +1160,15 @@ class Mt {
     };
   }
 }
-y(Mt, "loadedModules", /* @__PURE__ */ new Map()), y(Mt, "loadingPromises", /* @__PURE__ */ new Map());
-const _e = /[.!?。！？；;：:][)"'”’】）\]]*$/, Kt = /[\u3040-\u30ff\u3400-\u4dbf\u4e00-\u9fff\uac00-\ud7af]/, Ot = /[A-Za-z0-9]/, He = /^\s*(?:[-*+•·]\s+|\d+[.)、）]\s*|[a-zA-Z][.)]\s+)/;
-function Be(o) {
+y(bt, "loadedModules", /* @__PURE__ */ new Map()), y(bt, "loadingPromises", /* @__PURE__ */ new Map());
+const Be = /[.!?。！？；;：:][)"'”’】）\]]*$/, Kt = /[\u3040-\u30ff\u3400-\u4dbf\u4e00-\u9fff\uac00-\ud7af]/, _t = /[A-Za-z0-9]/, He = /^\s*(?:[-*+•·]\s+|\d+[.)、）]\s*|[a-zA-Z][.)]\s+)/;
+function _e(o) {
   const t = rn(o), e = Ee(o, t);
   if (e.length === 0)
     return [];
   const n = ae(e, t), i = [];
   for (const s of n) {
-    const a = i[i.length - 1], r = a ? Ye(a, s, t) : !1;
+    const a = i[i.length - 1], r = a ? Fe(a, s, t) : !1;
     if (!a || !r) {
       i.push(Ue(s));
       continue;
@@ -1211,13 +1221,13 @@ function ae(o, t) {
     const a = n[n.length - 1];
     a && Math.abs(s.y - a.y) < i && !tn(a.blocks, s, t) ? (a.blocks.push(s), a.y = Pt(a.blocks.map((r) => r.y))) : n.push({ y: s.y, blocks: [s] });
   }
-  return n.map((s) => Fe(s.blocks, t));
+  return n.map((s) => Ye(s.blocks, t));
 }
-function Fe(o, t) {
+function Ye(o, t) {
   const e = [...o].sort((r, l) => r.x - l.x), n = an(e), i = e.reduce((r, l, c) => {
-    const u = l.text.trim();
-    return c === 0 ? u : Xe(r, u);
-  }, ""), s = Pt(e.map((r) => Wt(r.fontSize, t))), a = Pt(e.map((r) => de(r)));
+    const d = l.text.trim();
+    return c === 0 ? d : Xe(r, d);
+  }, ""), s = Pt(e.map((r) => It(r.fontSize, t))), a = Pt(e.map((r) => de(r)));
   return {
     text: i,
     blocks: e,
@@ -1229,11 +1239,11 @@ function Fe(o, t) {
     isCodeLike: Qe(i)
   };
 }
-function Ye(o, t, e) {
+function Fe(o, t, e) {
   const n = ae(o.blocks, e), i = n[n.length - 1];
   if (!i || jt(i.text) || le(t.text) || t.isCodeLike || i.isCodeLike || t.hasTableColumns || i.hasTableColumns) return !1;
   const s = t.bbox.y - (i.bbox.y + i.bbox.height);
-  if (s < -e * 0.25 || s >= e * 1.8 || Ze(n, s, e) || Ge(i, t, s, e) || qe(i, t, s, e) || Ke(i, t, s, e) || Je(i, t, s, e))
+  if (s < -e * 0.25 || s >= e * 1.8 || Ze(n, s, e) || qe(i, t, s, e) || Ge(i, t, s, e) || Ke(i, t, s, e) || Je(i, t, s, e))
     return !1;
   const a = Math.max(e * 1.2, i.lineHeight * 0.9);
   return Math.abs(t.bbox.x - i.bbox.x) <= a;
@@ -1261,10 +1271,10 @@ function re(o, t) {
   if (!e) return n;
   if (!n) return e;
   const i = e.charAt(e.length - 1), s = n.charAt(0), a = e.charAt(e.length - 2);
-  return i === "-" && Ot.test(a) && Ot.test(s) ? `${e.slice(0, -1)}${n}` : ln(s) || cn(i) ? `${e}${n}` : Kt.test(i) || Kt.test(s) || te(i) || te(s) ? `${e}${n}` : Ot.test(i) && Ot.test(s) ? `${e} ${n}` : `${e} ${n}`.replace(/\s+/g, " ");
+  return i === "-" && _t.test(a) && _t.test(s) ? `${e.slice(0, -1)}${n}` : ln(s) || cn(i) ? `${e}${n}` : Kt.test(i) || Kt.test(s) || te(i) || te(s) ? `${e}${n}` : _t.test(i) && _t.test(s) ? `${e} ${n}` : `${e} ${n}`.replace(/\s+/g, " ");
 }
 function jt(o) {
-  return _e.test(o.trim());
+  return Be.test(o.trim());
 }
 function le(o) {
   return He.test(o);
@@ -1280,14 +1290,14 @@ function Ze(o, t, e) {
   const i = n.length > 0 ? Pt(n) : 0, s = Math.max(i * 2.2, e * 1.15);
   return t > s;
 }
-function Ge(o, t, e, n) {
+function qe(o, t, e, n) {
   const i = o.text.trim();
   if (!i || jt(i) || le(i) || o.isCodeLike || i.endsWith("-"))
     return !1;
   const s = i.split(/\s+/).filter(Boolean).length, a = o.bbox.width < t.bbox.width * 0.72, r = /^[A-Z][A-Za-z0-9\s:,'&()[\]/-]+$/.test(i) && s <= 8 && a, l = /[\u3400-\u4dbf\u4e00-\u9fff]/.test(i) && i.length <= 12 && a, c = r || l;
   return o.fontSize >= t.fontSize * 1.18 && c ? !0 : e > n * 0.7 && c;
 }
-function qe(o, t, e, n) {
+function Ge(o, t, e, n) {
   if (e <= 0)
     return !1;
   const i = Math.max(o.fontSize, t.fontSize), s = Math.max(Math.min(o.fontSize, t.fontSize), 1), a = i / s, r = e / Math.max(s, n * 0.6, 1);
@@ -1362,16 +1372,16 @@ function he(o, t) {
   };
 }
 function rn(o) {
-  return Wt(Pt(o.map((t) => de(t))), 16);
+  return It(Pt(o.map((t) => de(t))), 16);
 }
 function de(o) {
-  return Wt(o.lineHeight, Wt(o.height, Wt(o.fontSize, 16) * 1.2));
+  return It(o.lineHeight, It(o.height, It(o.fontSize, 16) * 1.2));
 }
 function Qt(o, t, e, n) {
   const i = t + n;
   return i <= 0 ? e : (o * t + e * n) / i;
 }
-function Wt(o, t) {
+function It(o, t) {
   return Number.isFinite(o) && o > 0 ? o : t;
 }
 function Pt(o) {
@@ -1412,7 +1422,7 @@ class hn {
     y(this, "pendingDragSnapshot", null);
     y(this, "pendingResizeSnapshot", null);
     // 工具设置
-    y(this, "currentTool", d.Select);
+    y(this, "currentTool", u.Select);
     y(this, "currentStyle", { color: "#ff4444", lineWidth: 3 });
     y(this, "textSize", 16);
     y(this, "mosaicSize", 5);
@@ -1424,8 +1434,8 @@ class hn {
       // 默认不可见
       mousePosition: { x: 0, y: 0 },
       showFormat: "hex",
-      zoomFactor: 40,
-      // 放大倍数，平衡精确度和预览范围
+      zoomFactor: 9,
+      // 使用紧凑奇数采样，让中心像素醒目且面板不挤压底部信息
       isCopied: !1
     });
     // 窗口吸附相关
@@ -1482,7 +1492,7 @@ class hn {
         this.detectInitialWindowSnap();
       }),
       this.loadScreenBackground()
-    ]), Mt.preloadModules();
+    ]), bt.preloadModules();
   }
   // 公开方法：触发背景图重新加载（响应 preview-ready 事件）
   triggerBackgroundReload() {
@@ -1509,7 +1519,7 @@ class hn {
     this.annotationUndoStack.push(this.createHistorySnapshot()), this.annotationRedoStack = [];
   }
   restoreHistorySnapshot(t) {
-    if (this.annotations = t.annotations.map((e) => Et.fromData(this.cloneAnnotationData(e))).filter((e) => e !== null), this.selectedAnnotation = null, this.hoveredAnnotation = null, this.draggedAnnotation = null, this.resizingAnnotation = null, this.editingAnnotation = null, t.selectedAnnotationId) {
+    if (this.annotations = t.annotations.map((e) => Ht.fromData(this.cloneAnnotationData(e))).filter((e) => e !== null), this.selectedAnnotation = null, this.hoveredAnnotation = null, this.draggedAnnotation = null, this.resizingAnnotation = null, this.editingAnnotation = null, t.selectedAnnotationId) {
       const e = this.annotations.find((n) => n.getData().id === t.selectedAnnotationId);
       e && (e.updateData({ selected: !0 }), this.selectedAnnotation = e);
     }
@@ -1536,7 +1546,7 @@ class hn {
       try {
         this.backgroundImage && (this.backgroundImage.onload = null, this.backgroundImage.onerror = null, this.backgroundImage = null), await this.loadPreviewImage(), await this.loadFullBackgroundImage();
       } catch (t) {
-        P.error("[截图] 加载屏幕背景失败", t), this.createFallbackBackground();
+        W.error("[截图] 加载屏幕背景失败", t), this.createFallbackBackground();
       } finally {
         this.isLoadingBackground = !1;
       }
@@ -1548,7 +1558,7 @@ class hn {
     let n = 0;
     for (; n < 5e3; )
       try {
-        const i = await q("get_screenshot_preview");
+        const i = await j("get_screenshot_preview");
         if (i && i.trim().length > 0)
           return;
         await new Promise((s) => setTimeout(s, 100)), n += 100;
@@ -1566,7 +1576,7 @@ class hn {
     let n = 0;
     for (; n < 5e3; )
       try {
-        const i = await q("get_screenshot_background");
+        const i = await j("get_screenshot_background");
         if (i) {
           const s = new Image();
           await new Promise((a, r) => {
@@ -1602,7 +1612,7 @@ class hn {
         this.backgroundImage = t, this.draw();
       };
     } catch (t) {
-      P.error("[截图] 创建后备背景失败", t);
+      W.error("[截图] 创建后备背景失败", t);
     }
   }
   // 绘制背景图像（支持预览图和完整图）
@@ -1618,27 +1628,27 @@ class hn {
       await new Promise((l) => setTimeout(l, 100));
       for (let l = 0; l < n; l++)
         try {
-          const [c, u] = await Promise.all([
-            q("get_cached_monitor_info"),
-            q("get_cached_window_list")
+          const [c, d] = await Promise.all([
+            j("get_cached_monitor_info"),
+            j("get_cached_window_list")
           ]);
           t = {
             x: c.x,
             y: c.y,
             scale: c.scale,
             isFullscreen: !1
-          }, e = u;
+          }, e = d;
           break;
         } catch {
           if (l < n - 1) {
             await new Promise((g) => setTimeout(g, i));
             continue;
           }
-          const u = await Promise.all([
-            q("get_window_info"),
-            q("get_all_windows")
+          const d = await Promise.all([
+            j("get_window_info"),
+            j("get_all_windows")
           ]);
-          t = u[0], e = u[1];
+          t = d[0], e = d[1];
         }
       const s = t?.scale || 1, a = window.innerWidth, r = window.innerHeight;
       this.allWindows = e.filter((l) => this.isValidWindow(l)).map((l) => ({
@@ -1651,7 +1661,7 @@ class hn {
         (l) => l.x >= -l.width && l.y >= -l.height && l.x < a + l.width && l.y < r + l.height
       );
     } catch (t) {
-      P.error("[截图] 加载窗口列表失败", t), this.allWindows = [];
+      W.error("[截图] 加载窗口列表失败", t), this.allWindows = [];
     }
   }
   // 检测初始窗口吸附（在窗口打开时立即调用）
@@ -1664,18 +1674,18 @@ class hn {
         return;
       let i;
       try {
-        const r = await q("get_cached_monitor_info");
+        const r = await j("get_cached_monitor_info");
         i = {
           x: r.x,
           y: r.y,
           scale: r.scale
         };
       } catch {
-        i = await q("get_window_info");
+        i = await j("get_window_info");
       }
       let s;
       try {
-        const r = await q("get_mouse_position"), l = i?.scale || 1;
+        const r = await j("get_mouse_position"), l = i?.scale || 1;
         s = {
           x: Math.round((r.x - i.x) / l),
           y: Math.round((r.y - i.y) / l)
@@ -1689,7 +1699,7 @@ class hn {
       const a = this.detectNearbyWindow(s);
       a && (this.snappedWindow = a, this.showSnapPreview = !0, this.draw());
     } catch (t) {
-      P.error("[截图] 初始窗口吸附检测失败", t);
+      W.error("[截图] 初始窗口吸附检测失败", t);
     }
   }
   // 检查窗口是否有效
@@ -1762,7 +1772,7 @@ class hn {
     if (n !== m.None)
       switch (this.eventHandler.setCurrentOperation(n), this.eventHandler.startDrawing(e), n) {
         case m.Drawing:
-          !this.selectionRect && this.currentTool === d.Select && (this.dragStartPosition = { ...e }, this.snappedWindow ? this.pendingSnapWindow = this.snappedWindow : (this.selectionRect = {
+          !this.selectionRect && this.currentTool === u.Select && (this.dragStartPosition = { ...e }, this.snappedWindow ? this.pendingSnapWindow = this.snappedWindow : (this.selectionRect = {
             x: e.x,
             y: e.y,
             width: 0,
@@ -1785,7 +1795,7 @@ class hn {
           this.selectionRect && (this.createPinWindow(), this.eventHandler.stopDrawing());
           break;
         case m.EditingAnnotation:
-          this.selectAnnotationAtPoint(e), this.selectedAnnotation && this.selectedAnnotation.getData().type === d.Text && this.startTextInput(this.selectedAnnotation.getData().points[0], this.selectedAnnotation);
+          this.selectAnnotationAtPoint(e), this.selectedAnnotation && this.selectedAnnotation.getData().type === u.Text && this.startTextInput(this.selectedAnnotation.getData().points[0], this.selectedAnnotation);
           break;
         case m.MovingAnnotation:
           this.startAnnotationDrag(e);
@@ -1810,18 +1820,18 @@ class hn {
   handleMouseMove(t) {
     const e = this.coordinateSystem.getCanvasPosition(t), n = this.eventHandler.getDrawingState();
     if (n.isDrawing)
-      this.eventHandler.updateMousePosition(e), this.pendingSnapWindow && this.dragStartPosition && !this.selectionRect && rt(e, this.dragStartPosition) > this.dragThreshold && (this.selectionRect = {
+      this.eventHandler.updateMousePosition(e), this.pendingSnapWindow && this.dragStartPosition && !this.selectionRect && lt(e, this.dragStartPosition) > this.dragThreshold && (this.selectionRect = {
         x: this.dragStartPosition.x,
         y: this.dragStartPosition.y,
         width: 0,
         height: 0
-      }, this.pendingSnapWindow = null, this.onStateChange?.()), this.currentAnnotation ? this.updateCurrentAnnotation(e) : this.draggedAnnotation ? this.updateAnnotationDrag(e) : this.resizingAnnotation ? this.updateAnnotationResize(e) : this.selectionRect && this.currentTool === d.Select && this.updateSelectionRect(e, n), this.draw(), this.onStateChange?.();
+      }, this.pendingSnapWindow = null, this.onStateChange?.()), this.currentAnnotation ? this.updateCurrentAnnotation(e) : this.draggedAnnotation ? this.updateAnnotationDrag(e) : this.resizingAnnotation ? this.updateAnnotationResize(e) : this.selectionRect && this.currentTool === u.Select && this.updateSelectionRect(e, n), this.draw(), this.onStateChange?.();
     else {
-      if (this.currentTool === d.Select && !this.selectionRect) {
+      if (this.currentTool === u.Select && !this.selectionRect) {
         const i = this.detectNearbyWindow(e);
         i !== this.snappedWindow && (this.snappedWindow = i, this.showSnapPreview = !!i, this.draw());
       }
-      this.updateHoverState(e), this.currentTool === d.ColorPicker && this.selectionRect && (this.coordinateSystem.isPointInRect(e, this.selectionRect) ? (this.colorPickerState.isVisible = !0, this.colorPickerState.mousePosition = e, this.draw(), this.throttledUpdateColorPreview(e)) : this.colorPickerState.isVisible && (this.colorPickerState.isVisible = !1, this.draw()));
+      this.updateHoverState(e), this.currentTool === u.ColorPicker && this.selectionRect && (this.coordinateSystem.isPointInRect(e, this.selectionRect) ? (this.colorPickerState.isVisible = !0, this.colorPickerState.mousePosition = e, this.draw(), this.throttledUpdateColorPreview(e)) : this.colorPickerState.isVisible && (this.colorPickerState.isVisible = !1, this.draw()));
     }
   }
   // 鼠标抬起处理
@@ -1836,7 +1846,7 @@ class hn {
   // 双击处理
   handleDoubleClick(t) {
     const e = this.coordinateSystem.getCanvasPosition(t), n = this.eventHandler.getAnnotationAtPoint(e, this.annotations);
-    n?.getData().type === d.Text && (this.clearSelection(), n.updateData({ selected: !0 }), this.selectedAnnotation = n, this.startTextInput(e, n));
+    n?.getData().type === u.Text && (this.clearSelection(), n.updateData({ selected: !0 }), this.selectedAnnotation = n, this.startTextInput(e, n));
   }
   // 键盘按下处理（内部）
   handleKeyDownInternal(t) {
@@ -1887,7 +1897,7 @@ class hn {
   // 选择指定位置的标注
   selectAnnotationAtPoint(t) {
     const e = this.eventHandler.getAnnotationAtPoint(t, this.annotations);
-    e && e !== this.selectedAnnotation && (this.selectedAnnotation && this.selectedAnnotation.updateData({ selected: !1 }), this.selectedAnnotation = e, this.selectedAnnotation.updateData({ selected: !0 }), this.selectedAnnotation.getData().type === d.Text && this.startTextInput(t, this.selectedAnnotation), this.draw(), this.onStateChange?.());
+    e && e !== this.selectedAnnotation && (this.selectedAnnotation && this.selectedAnnotation.updateData({ selected: !1 }), this.selectedAnnotation = e, this.selectedAnnotation.updateData({ selected: !0 }), this.selectedAnnotation.getData().type === u.Text && this.startTextInput(t, this.selectedAnnotation), this.draw(), this.onStateChange?.());
   }
   // 开始标注拖拽
   startAnnotationDrag(t) {
@@ -1970,17 +1980,17 @@ class hn {
   }
   // 更新悬停状态
   updateHoverState(t) {
-    if (this.currentTool !== d.Select) {
+    if (this.currentTool !== u.Select) {
       this.updateToolCursor();
       return;
     }
     const e = this.eventHandler.getAnnotationAtPoint(t, this.annotations);
-    e !== this.hoveredAnnotation && (this.hoveredAnnotation && this.hoveredAnnotation.updateData({ hovered: !1 }), this.hoveredAnnotation = e && e.getData().type !== d.Mosaic ? e : null, this.hoveredAnnotation && this.hoveredAnnotation.updateData({ hovered: !0 }), this.draw()), this.updateCursorForPosition(t);
+    e !== this.hoveredAnnotation && (this.hoveredAnnotation && this.hoveredAnnotation.updateData({ hovered: !1 }), this.hoveredAnnotation = e && e.getData().type !== u.Mosaic ? e : null, this.hoveredAnnotation && this.hoveredAnnotation.updateData({ hovered: !0 }), this.draw()), this.updateCursorForPosition(t);
   }
   // 更新鼠标样式
   updateCursorForPosition(t) {
-    if (this.currentTool !== d.Select) {
-      this.updateCursor("crosshair");
+    if (this.currentTool !== u.Select) {
+      this.updateToolCursor();
       return;
     }
     if (!this.selectionRect) {
@@ -2017,18 +2027,18 @@ class hn {
   // 根据当前工具更新光标样式
   updateToolCursor() {
     switch (this.currentTool) {
-      case d.Pen:
-        this.updateCursor(this.createCircleCursor(this.currentStyle.lineWidth, this.currentStyle.color));
+      case u.Pen:
+        this.updateCursor(this.createPenCursor(this.currentStyle.color));
         break;
-      case d.Mosaic:
+      case u.Mosaic:
         this.updateCursor(this.createCircleCursor(this.mosaicSize * 3, "#666"));
         break;
-      case d.ColorPicker:
-        this.updateCursor("crosshair");
+      case u.ColorPicker:
+        this.updateCursor(this.createColorPickerCursor());
         break;
-      case d.Rectangle:
-      case d.Arrow:
-      case d.Text:
+      case u.Rectangle:
+      case u.Arrow:
+      case u.Text:
         this.updateCursor("crosshair");
         break;
       default:
@@ -2047,6 +2057,27 @@ class hn {
       </svg>
     `;
     return `url('data:image/svg+xml;utf8,${encodeURIComponent(a)}') ${s} ${s}, crosshair`;
+  }
+  createPenCursor(t = "#ff4444") {
+    const e = `
+      <svg width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <path d="M4 20l4.8-1.1L20.2 7.5a2.2 2.2 0 0 0 0-3.1l-.6-.6a2.2 2.2 0 0 0-3.1 0L5.1 15.2 4 20z"
+              fill="white" stroke="#111827" stroke-width="1.7" stroke-linejoin="round"/>
+        <path d="M14.8 5.5l3.7 3.7" stroke="#111827" stroke-width="1.7" stroke-linecap="round"/>
+        <path d="M5.1 15.2L8.8 18.9" stroke="${t}" stroke-width="2" stroke-linecap="round"/>
+      </svg>
+    `;
+    return `url('data:image/svg+xml;utf8,${encodeURIComponent(e)}') 4 20, crosshair`;
+  }
+  createColorPickerCursor() {
+    return `url('data:image/svg+xml;utf8,${encodeURIComponent(`
+      <svg width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <path d="M15.5 3.8a2.4 2.4 0 0 1 3.4 0l1.3 1.3a2.4 2.4 0 0 1 0 3.4l-9.4 9.4H7.4v-3.4l9.4-9.4z"
+              fill="white" stroke="#111827" stroke-width="1.7" stroke-linejoin="round"/>
+        <path d="M13.7 6.3l4 4" stroke="#111827" stroke-width="1.7" stroke-linecap="round"/>
+        <path d="M4 20h6" stroke="#4f46e5" stroke-width="2" stroke-linecap="round"/>
+      </svg>
+    `)}') 4 20, crosshair`;
   }
   // 绘制所有内容
   draw() {
@@ -2068,13 +2099,13 @@ class hn {
     t.save();
     const { x: e, y: n, width: i, height: s } = this.selectionRect, a = 8;
     if (this.translationOverlay.isLoading) {
-      const v = e + i / 2, R = n + s / 2;
-      t.fillStyle = "rgba(0, 0, 0, 0.7)", t.fillRect(e, n, i, s), t.font = '16px "Microsoft YaHei", sans-serif', t.fillStyle = "#ffffff", t.textAlign = "center", t.textBaseline = "middle", t.fillText("正在识别翻译...", v, R), t.restore();
+      const v = e + i / 2, C = n + s / 2;
+      t.fillStyle = "rgba(0, 0, 0, 0.7)", t.fillRect(e, n, i, s), t.font = '16px "Microsoft YaHei", sans-serif', t.fillStyle = "#ffffff", t.textAlign = "center", t.textBaseline = "middle", t.fillText("正在识别翻译...", v, C), t.restore();
       return;
     }
     if (this.translationOverlay.errorMessage) {
-      const v = e + i / 2, R = n + s / 2;
-      t.fillStyle = "rgba(0, 0, 0, 0.8)", t.fillRect(e, n, i, s), t.font = '16px "Microsoft YaHei", sans-serif', t.fillStyle = "#ff6b6b", t.textAlign = "center", t.textBaseline = "middle", t.fillText(this.translationOverlay.errorMessage, v, R), t.restore();
+      const v = e + i / 2, C = n + s / 2;
+      t.fillStyle = "rgba(0, 0, 0, 0.8)", t.fillRect(e, n, i, s), t.font = '16px "Microsoft YaHei", sans-serif', t.fillStyle = "#ff6b6b", t.textAlign = "center", t.textBaseline = "middle", t.fillText(this.translationOverlay.errorMessage, v, C), t.restore();
       return;
     }
     if (this.translationOverlay.blocks.length === 0) {
@@ -2082,15 +2113,15 @@ class hn {
       return;
     }
     const r = { x: e, y: n, width: i, height: s }, l = this.sampleRegionColor(r), c = l.brightness < 128;
-    let u, g;
+    let d, g;
     if (c) {
-      const v = Math.max(0, Math.round(l.r * 0.1)), R = Math.max(0, Math.round(l.g * 0.1)), $ = Math.max(0, Math.round(l.b * 0.1));
-      u = `rgba(${v}, ${R}, ${$}, 0.95)`, g = "rgba(255, 255, 255, 0.9)";
+      const v = Math.max(0, Math.round(l.r * 0.1)), C = Math.max(0, Math.round(l.g * 0.1)), E = Math.max(0, Math.round(l.b * 0.1));
+      d = `rgba(${v}, ${C}, ${E}, 0.95)`, g = "rgba(255, 255, 255, 0.9)";
     } else {
-      const v = Math.min(255, Math.round(l.r + (255 - l.r) * 0.95)), R = Math.min(255, Math.round(l.g + (255 - l.g) * 0.95)), $ = Math.min(255, Math.round(l.b + (255 - l.b) * 0.95));
-      u = `rgba(${v}, ${R}, ${$}, 0.95)`, g = "rgba(0, 0, 0, 0.85)";
+      const v = Math.min(255, Math.round(l.r + (255 - l.r) * 0.95)), C = Math.min(255, Math.round(l.g + (255 - l.g) * 0.95)), E = Math.min(255, Math.round(l.b + (255 - l.b) * 0.95));
+      d = `rgba(${v}, ${C}, ${E}, 0.95)`, g = "rgba(0, 0, 0, 0.85)";
     }
-    t.fillStyle = u, t.fillRect(e, n, i, s), t.fillStyle = g, t.textAlign = "left", t.textBaseline = "top";
+    t.fillStyle = d, t.fillRect(e, n, i, s), t.fillStyle = g, t.textAlign = "left", t.textBaseline = "top";
     const w = this.translationOverlay.paragraphBlocks?.length ? this.translationOverlay.paragraphBlocks : this.translationOverlay.blocks.map((v) => ({
       text: v.text,
       translatedText: v.translatedText,
@@ -2113,32 +2144,32 @@ class hn {
     t.restore();
   }
   drawFlowedTranslationBlocks(t, e, n, i, s, a, r) {
-    const l = [...e].filter((b) => (b.translatedText || b.text).trim()).sort((b, L) => {
-      const D = b.bbox.y - L.bbox.y;
-      return Math.abs(D) > 4 ? D : b.bbox.x - L.bbox.x;
+    const l = [...e].filter((b) => (b.translatedText || b.text).trim()).sort((b, I) => {
+      const L = b.bbox.y - I.bbox.y;
+      return Math.abs(L) > 4 ? L : b.bbox.x - I.bbox.x;
     });
     if (l.length === 0)
       return;
-    const c = Math.max(24, r - s * 2), u = s, g = (b, L, D) => l.map((W) => {
-      const Y = (W.translatedText || W.text).trim(), z = Math.max(12, Math.min(W.fontSize || 16, 48)), N = Math.max(8, Math.round(z * b)), E = W.isCodeBlock ? '"Consolas", "Monaco", monospace' : '"Microsoft YaHei", "PingFang SC", "Hiragino Sans GB", sans-serif', O = Math.max(
+    const c = Math.max(24, r - s * 2), d = s, g = (b, I, L) => l.map((B) => {
+      const F = (B.translatedText || B.text).trim(), T = Math.max(12, Math.min(B.fontSize || 16, 48)), H = Math.max(8, Math.round(T * b)), P = B.isCodeBlock ? '"Consolas", "Monaco", monospace' : '"Microsoft YaHei", "PingFang SC", "Hiragino Sans GB", sans-serif', V = Math.max(
         s,
-        Math.min(W.bbox.x + s, a * 0.38)
-      ), U = L ? s : O, V = Math.max(48, a - U - u), ot = W.lineHeight || N * 1.35, X = Math.max(
-        N * (D ? 1.04 : 1.14),
-        Math.min(ot * b, N * (D ? 1.18 : 1.42))
+        Math.min(B.bbox.x + s, a * 0.38)
+      ), U = I ? s : V, Y = Math.max(48, a - U - d), st = B.lineHeight || H * 1.35, X = Math.max(
+        H * (L ? 1.04 : 1.14),
+        Math.min(st * b, H * (L ? 1.18 : 1.42))
       );
-      return t.font = `${N}px ${E}`, {
-        text: Y,
-        fontSize: N,
-        fontFamily: E,
+      return t.font = `${H}px ${P}`, {
+        text: F,
+        fontSize: H,
+        fontFamily: P,
         lineHeight: X,
-        paragraphGap: D ? Math.max(1, X * 0.16) : Math.max(3, X * 0.35),
+        paragraphGap: L ? Math.max(1, X * 0.16) : Math.max(3, X * 0.35),
         x: n + U,
-        lines: this.wrapTextToLines(t, Y, V)
+        lines: this.wrapTextToLines(t, F, Y)
       };
-    }), w = (b) => b.reduce((L, D, W) => {
-      const Y = W === b.length - 1 ? 0 : D.paragraphGap;
-      return L + D.lines.length * D.lineHeight + Y;
+    }), w = (b) => b.reduce((I, L, B) => {
+      const F = B === b.length - 1 ? 0 : L.paragraphGap;
+      return I + L.lines.length * L.lineHeight + F;
     }, 0);
     let p = g(1, !1, !1), x = w(p);
     if (x > c) {
@@ -2153,26 +2184,26 @@ class hn {
       const b = Math.max(0.3, c / x * 0.94);
       p = g(b, !0, !0), x = w(p);
     }
-    const v = Math.min(...l.map((b) => b.bbox.y)), R = i + Math.max(s, Math.min(v, r - s)), $ = i + r - s;
-    let H = R + x > $ ? i + s : R;
+    const v = Math.min(...l.map((b) => b.bbox.y)), C = i + Math.max(s, Math.min(v, r - s)), E = i + r - s;
+    let A = C + x > E ? i + s : C;
     for (const b of p) {
       t.font = `${b.fontSize}px ${b.fontFamily}`;
-      for (const L of b.lines)
-        t.fillText(L, b.x, H), H += b.lineHeight;
-      H += b.paragraphGap;
+      for (const I of b.lines)
+        t.fillText(I, b.x, A), A += b.lineHeight;
+      A += b.paragraphGap;
     }
   }
   drawStructuredTranslationBlock(t, e, n, i, s, a, r) {
-    const l = [...e.blocks].sort((g, w) => g.x - w.x), c = Math.max(12, Math.min(e.fontSize || 14, 32)), u = e.lineHeight || c * 1.35;
+    const l = [...e.blocks].sort((g, w) => g.x - w.x), c = Math.max(12, Math.min(e.fontSize || 14, 32)), d = e.lineHeight || c * 1.35;
     t.font = `${c}px "Consolas", "Monaco", monospace`;
     for (const g of l) {
       const w = g.translatedText || g.text;
       if (!w.trim()) continue;
-      const p = n + g.x + Math.min(4, s), x = i + g.y, v = l.find((b) => b.x > g.x), R = v ? Math.max(g.width, v.x - g.x - 8) : Math.max(g.width, a - g.x - s), $ = this.wrapTextToLines(t, w.trim(), R);
-      let H = x;
-      for (const b of $) {
-        if (H + c > i + r) break;
-        t.fillText(b, p, H), H += u;
+      const p = n + g.x + Math.min(4, s), x = i + g.y, v = l.find((b) => b.x > g.x), C = v ? Math.max(g.width, v.x - g.x - 8) : Math.max(g.width, a - g.x - s), E = this.wrapTextToLines(t, w.trim(), C);
+      let A = x;
+      for (const b of E) {
+        if (A + c > i + r) break;
+        t.fillText(b, p, A), A += d;
       }
     }
   }
@@ -2186,20 +2217,20 @@ class hn {
     const s = [], a = /\s/.test(i) ? i.split(/(\s+)/).filter((c) => c.length > 0) : Array.from(i);
     let r = "";
     const l = (c) => {
-      let u = "";
+      let d = "";
       for (const g of Array.from(c)) {
-        const w = u + g;
-        t.measureText(w).width > n && u !== "" ? (s.push(u), u = g) : u = w;
+        const w = d + g;
+        t.measureText(w).width > n && d !== "" ? (s.push(d), d = g) : d = w;
       }
-      r = u;
+      r = d;
     };
     for (const c of a) {
-      const u = /^\s+$/.test(c), g = u ? " " : c, w = r + g;
+      const d = /^\s+$/.test(c), g = d ? " " : c, w = r + g;
       if (t.measureText(w).width <= n) {
         r = w;
         continue;
       }
-      r.trim() && (s.push(r.trimEnd()), r = ""), !u && (t.measureText(g).width > n ? l(g) : r = g);
+      r.trim() && (s.push(r.trimEnd()), r = ""), !d && (t.measureText(g).width > n ? l(g) : r = g);
     }
     return r.trim() && s.push(r.trimEnd()), s;
   }
@@ -2216,45 +2247,45 @@ class hn {
     const i = window.devicePixelRatio || 1, s = Math.round(t.width * i), a = Math.round(t.height * i), r = this.canvasPool.acquire(s, a), l = r.getContext("2d");
     if (!l)
       return this.canvasPool.release(r), n;
-    const c = this.backgroundImage.width, u = this.backgroundImage.height, g = this.canvas.width / i, w = this.canvas.height / i, p = c / g, x = u / w, v = t.x * p, R = t.y * x, $ = t.width * p, H = t.height * x;
+    const c = this.backgroundImage.width, d = this.backgroundImage.height, g = this.canvas.width / i, w = this.canvas.height / i, p = c / g, x = d / w, v = t.x * p, C = t.y * x, E = t.width * p, A = t.height * x;
     try {
       l.drawImage(
         this.backgroundImage,
         v,
-        R,
-        $,
-        H,
+        C,
+        E,
+        A,
         0,
         0,
         s,
         a
       );
-    } catch (T) {
-      return P.error("[截图] 采样区域绘制失败", T), this.canvasPool.release(r), n;
+    } catch (z) {
+      return W.error("[截图] 采样区域绘制失败", z), this.canvasPool.release(r), n;
     }
     let b;
     try {
       b = l.getImageData(0, 0, s, a);
-    } catch (T) {
-      return P.error("[截图] 获取像素数据失败", T), this.canvasPool.release(r), n;
+    } catch (z) {
+      return W.error("[截图] 获取像素数据失败", z), this.canvasPool.release(r), n;
     }
-    const L = b.data, D = Math.ceil(Math.sqrt(e)), W = s / (D + 1), Y = a / (D + 1);
-    let z = 0, N = 0, E = 0, O = 0;
-    for (let T = 1; T <= D; T++)
-      for (let B = 1; B <= D && !(O >= e); B++) {
-        const tt = Math.floor(B * W), nt = Math.floor(T * Y);
-        if (tt >= 0 && tt < s && nt >= 0 && nt < a) {
-          const S = (nt * s + tt) * 4;
-          S >= 0 && S + 2 < L.length && (z += L[S], N += L[S + 1], E += L[S + 2], O++);
+    const I = b.data, L = Math.ceil(Math.sqrt(e)), B = s / (L + 1), F = a / (L + 1);
+    let T = 0, H = 0, P = 0, V = 0;
+    for (let z = 1; z <= L; z++)
+      for (let O = 1; O <= L && !(V >= e); O++) {
+        const Q = Math.floor(O * B), tt = Math.floor(z * F);
+        if (Q >= 0 && Q < s && tt >= 0 && tt < a) {
+          const S = (tt * s + Q) * 4;
+          S >= 0 && S + 2 < I.length && (T += I[S], H += I[S + 1], P += I[S + 2], V++);
         }
       }
-    if (this.canvasPool.release(r), O === 0)
+    if (this.canvasPool.release(r), V === 0)
       return n;
-    const U = Math.round(z / O), V = Math.round(N / O), ot = Math.round(E / O), X = this.getBrightness(U, V, ot);
+    const U = Math.round(T / V), Y = Math.round(H / V), st = Math.round(P / V), X = this.getBrightness(U, Y, st);
     return {
       r: U,
-      g: V,
-      b: ot,
+      g: Y,
+      b: st,
       brightness: X
     };
   }
@@ -2281,11 +2312,11 @@ class hn {
     const { brightness: e } = t, n = e < 128, i = e / 255, a = 0.85 + Math.abs(i - 0.5) * 2 * 0.1;
     let r, l;
     if (n) {
-      const c = Math.max(0, Math.round(t.r * 0.2)), u = Math.max(0, Math.round(t.g * 0.2)), g = Math.max(0, Math.round(t.b * 0.2));
-      r = `rgba(${c}, ${u}, ${g}, ${a})`, l = "rgba(255, 255, 255, 0.95)";
+      const c = Math.max(0, Math.round(t.r * 0.2)), d = Math.max(0, Math.round(t.g * 0.2)), g = Math.max(0, Math.round(t.b * 0.2));
+      r = `rgba(${c}, ${d}, ${g}, ${a})`, l = "rgba(255, 255, 255, 0.95)";
     } else {
-      const c = Math.min(255, Math.round(t.r + (255 - t.r) * 0.8)), u = Math.min(255, Math.round(t.g + (255 - t.g) * 0.8)), g = Math.min(255, Math.round(t.b + (255 - t.b) * 0.8));
-      r = `rgba(${c}, ${u}, ${g}, ${a})`, l = "rgba(0, 0, 0, 0.9)";
+      const c = Math.min(255, Math.round(t.r + (255 - t.r) * 0.8)), d = Math.min(255, Math.round(t.g + (255 - t.g) * 0.8)), g = Math.min(255, Math.round(t.b + (255 - t.b) * 0.8));
+      r = `rgba(${c}, ${d}, ${g}, ${a})`, l = "rgba(0, 0, 0, 0.9)";
     }
     return {
       backgroundColor: r,
@@ -2310,45 +2341,45 @@ class hn {
     const i = window.devicePixelRatio || 1, s = Math.round(t.width * i), a = Math.round(t.height * i), r = this.canvasPool.acquire(s, a), l = r.getContext("2d");
     if (!l)
       return this.canvasPool.release(r), !1;
-    const c = this.backgroundImage.width, u = this.backgroundImage.height, g = this.canvas.width / i, w = this.canvas.height / i, p = c / g, x = u / w, v = t.x * p, R = t.y * x, $ = t.width * p, H = t.height * x;
+    const c = this.backgroundImage.width, d = this.backgroundImage.height, g = this.canvas.width / i, w = this.canvas.height / i, p = c / g, x = d / w, v = t.x * p, C = t.y * x, E = t.width * p, A = t.height * x;
     try {
       l.drawImage(
         this.backgroundImage,
         v,
-        R,
-        $,
-        H,
+        C,
+        E,
+        A,
         0,
         0,
         s,
         a
       );
-    } catch (T) {
-      return P.error("[截图] isUniformColor: 采样区域绘制失败", T), this.canvasPool.release(r), !1;
+    } catch (z) {
+      return W.error("[截图] isUniformColor: 采样区域绘制失败", z), this.canvasPool.release(r), !1;
     }
     let b;
     try {
       b = l.getImageData(0, 0, s, a);
-    } catch (T) {
-      return P.error("[截图] isUniformColor: 获取像素数据失败", T), this.canvasPool.release(r), !1;
+    } catch (z) {
+      return W.error("[截图] isUniformColor: 获取像素数据失败", z), this.canvasPool.release(r), !1;
     }
-    const L = b.data, D = Math.ceil(Math.sqrt(n)), W = s / (D + 1), Y = a / (D + 1), z = [];
-    for (let T = 1; T <= D; T++)
-      for (let B = 1; B <= D && !(z.length >= n); B++) {
-        const tt = Math.floor(B * W), nt = Math.floor(T * Y);
-        if (tt >= 0 && tt < s && nt >= 0 && nt < a) {
-          const S = (nt * s + tt) * 4;
-          S >= 0 && S + 2 < L.length && z.push({
-            r: L[S],
-            g: L[S + 1],
-            b: L[S + 2]
+    const I = b.data, L = Math.ceil(Math.sqrt(n)), B = s / (L + 1), F = a / (L + 1), T = [];
+    for (let z = 1; z <= L; z++)
+      for (let O = 1; O <= L && !(T.length >= n); O++) {
+        const Q = Math.floor(O * B), tt = Math.floor(z * F);
+        if (Q >= 0 && Q < s && tt >= 0 && tt < a) {
+          const S = (tt * s + Q) * 4;
+          S >= 0 && S + 2 < I.length && T.push({
+            r: I[S],
+            g: I[S + 1],
+            b: I[S + 2]
           });
         }
       }
-    if (this.canvasPool.release(r), z.length < 2)
+    if (this.canvasPool.release(r), T.length < 2)
       return !1;
-    const N = z.reduce((T, B) => T + B.r, 0) / z.length, E = z.reduce((T, B) => T + B.g, 0) / z.length, O = z.reduce((T, B) => T + B.b, 0) / z.length, U = z.reduce((T, B) => T + Math.pow(B.r - N, 2), 0) / z.length, V = z.reduce((T, B) => T + Math.pow(B.g - E, 2), 0) / z.length, ot = z.reduce((T, B) => T + Math.pow(B.b - O, 2), 0) / z.length;
-    return (U + V + ot) / 3 < e;
+    const H = T.reduce((z, O) => z + O.r, 0) / T.length, P = T.reduce((z, O) => z + O.g, 0) / T.length, V = T.reduce((z, O) => z + O.b, 0) / T.length, U = T.reduce((z, O) => z + Math.pow(O.r - H, 2), 0) / T.length, Y = T.reduce((z, O) => z + Math.pow(O.g - P, 2), 0) / T.length, st = T.reduce((z, O) => z + Math.pow(O.b - V, 2), 0) / T.length;
+    return (U + Y + st) / 3 < e;
   }
   /**
    * 根据OCR块高度估算合适的字体大小
@@ -2417,20 +2448,20 @@ class hn {
   }
   // 设置工具
   setTool(t) {
-    this.currentTool = t, this.clearSelection(), this.showGuides = t === d.Select, this.colorPickerState.isActive = t === d.ColorPicker, this.colorPickerState.isActive || (this.colorPickerState.isVisible = !1, this.colorPickerState.colorInfo = void 0), t !== d.Translate && this.translationOverlay.isVisible && this.clearTranslationOverlay(), t !== d.Select && this.hoveredAnnotation && (this.hoveredAnnotation.updateData({ hovered: !1 }), this.hoveredAnnotation = null), this.snappedWindow = null, this.showSnapPreview = !1, this.pendingSnapWindow = null, this.dragStartPosition = null, t !== d.Select && this.updateToolCursor(), this.draw(), this.onStateChange?.();
+    this.currentTool = t, this.clearSelection(), this.showGuides = t === u.Select, this.colorPickerState.isActive = t === u.ColorPicker, this.colorPickerState.isActive || (this.colorPickerState.isVisible = !1, this.colorPickerState.colorInfo = void 0), t !== u.Translate && this.translationOverlay.isVisible && this.clearTranslationOverlay(), t !== u.Select && this.hoveredAnnotation && (this.hoveredAnnotation.updateData({ hovered: !1 }), this.hoveredAnnotation = null), this.snappedWindow = null, this.showSnapPreview = !1, this.pendingSnapWindow = null, this.dragStartPosition = null, t !== u.Select && this.updateToolCursor(), this.draw(), this.onStateChange?.();
   }
   // 执行翻译（供外部调用）
   executeTranslation() {
-    this.currentTool === d.Translate && this.selectionRect && (this.translationOverlay.isLoading = !0, this.translationOverlay.isVisible = !0, this.draw(), this.onStateChange?.(), this.performOcrTranslation());
+    this.currentTool === u.Translate && this.selectionRect && (this.translationOverlay.isLoading = !0, this.translationOverlay.isVisible = !0, this.draw(), this.onStateChange?.(), this.performOcrTranslation());
   }
   // 开始创建标注
   startAnnotation(t) {
-    if (Et.isDrawingTool(this.currentTool)) {
-      if (this.currentTool === d.Text) {
+    if (Ht.isDrawingTool(this.currentTool)) {
+      if (this.currentTool === u.Text) {
         this.startTextInput(t);
         return;
       }
-      this.currentAnnotation = Et.createAnnotation(
+      this.currentAnnotation = Ht.createAnnotation(
         this.currentTool,
         t,
         this.currentStyle,
@@ -2447,14 +2478,14 @@ class hn {
       return;
     const e = this.currentAnnotation.getData();
     switch (e.type) {
-      case d.Rectangle:
-      case d.Arrow:
+      case u.Rectangle:
+      case u.Arrow:
         e.points.length === 1 ? this.currentAnnotation.addPoint(t) : this.currentAnnotation.updateLastPoint(t);
         break;
-      case d.Pen:
+      case u.Pen:
         this.currentAnnotation.addPoint(t);
         break;
-      case d.Mosaic:
+      case u.Mosaic:
         this.currentAnnotation.addPoint(t);
         break;
     }
@@ -2463,7 +2494,7 @@ class hn {
   finishAnnotation() {
     if (this.currentAnnotation) {
       const t = this.currentAnnotation.getData();
-      t.type === d.Pen && this.isShiftPressed && t.points.length >= 3 && this.smartCorrectPenAnnotation(), this.currentAnnotation.isValid() && (this.pushAnnotationHistory(), this.annotations.push(this.currentAnnotation), this.onStateChange?.());
+      t.type === u.Pen && this.isShiftPressed && t.points.length >= 3 && this.smartCorrectPenAnnotation(), this.currentAnnotation.isValid() && (this.pushAnnotationHistory(), this.annotations.push(this.currentAnnotation), this.onStateChange?.());
     }
     this.currentAnnotation = null;
   }
@@ -2479,8 +2510,8 @@ class hn {
     const r = i - n, l = a - s;
     let c = 0;
     for (let p = 1; p < e.length; p++)
-      c += rt(e[p - 1], e[p]);
-    const g = rt(e[0], e[e.length - 1]) / c, w = Math.max(r, l) / Math.max(Math.min(r, l), 1);
+      c += lt(e[p - 1], e[p]);
+    const g = lt(e[0], e[e.length - 1]) / c, w = Math.max(r, l) / Math.max(Math.min(r, l), 1);
     if (g > 0.85 || w > 5) {
       const p = e[0], x = e[e.length - 1];
       this.currentAnnotation.updateData({ points: [p, x] });
@@ -2523,8 +2554,8 @@ class hn {
   // 创建文字标注
   createTextAnnotation(t, e) {
     if (!e.trim()) return;
-    const n = Et.createAnnotation(
-      d.Text,
+    const n = Ht.createAnnotation(
+      u.Text,
       t,
       this.currentStyle,
       {
@@ -2543,14 +2574,14 @@ class hn {
     if (!this.selectionRect)
       throw new Error("没有选择区域");
     try {
-      const { x: e, y: n, width: i, height: s } = this.selectionRect, r = (await q("get_window_info"))?.scale || 1, l = await this.cropFromBackground(e, n, i, s);
+      const { x: e, y: n, width: i, height: s } = this.selectionRect, r = (await j("get_window_info"))?.scale || 1, l = await this.cropFromBackground(e, n, i, s);
       if (!l?.image)
         throw new Error("无法从背景图像裁剪选区");
       const c = await this.renderWithAnnotations(l, r, t);
-      t === "copy" ? await q("copy_to_clipboard", { image: c }) : await q("save_screenshot_to_file", { image: c });
+      t === "copy" ? await j("copy_to_clipboard", { image: c }) : await j("save_screenshot_to_file", { image: c });
     } catch (e) {
       const n = t === "save" ? "保存" : "复制";
-      throw P.error(`[截图] ${n}截图失败`, e), new Error(`${n}截图失败: ${e?.message || e?.toString() || "未知错误"}`);
+      throw W.error(`[截图] ${n}截图失败`, e), new Error(`${n}截图失败: ${e?.message || e?.toString() || "未知错误"}`);
     }
   }
   // 从背景图像裁剪指定区域
@@ -2561,47 +2592,47 @@ class hn {
       }, 1e4);
       try {
         if (!this.backgroundImage) {
-          let J = 0;
-          for (; !this.backgroundImage && J < 3e3; )
-            await new Promise((C) => setTimeout(C, 100)), J += 100;
+          let q = 0;
+          for (; !this.backgroundImage && q < 3e3; )
+            await new Promise((R) => setTimeout(R, 100)), q += 100;
           if (!this.backgroundImage)
             throw new Error("背景图像加载超时");
         }
-        const c = window.devicePixelRatio || 1, u = Math.max(0, s.padding || 0), g = this.canvas.width / c, w = this.canvas.height / c, p = t - u, x = e - u, v = n + u * 2, R = i + u * 2, $ = Math.max(1, Math.round(v * c)), H = Math.max(1, Math.round(R * c)), b = Math.max(0, p), L = Math.max(0, x), D = Math.min(g, p + v), W = Math.min(w, x + R), Y = Math.max(0, D - b), z = Math.max(0, W - L), N = Math.round(b * c), E = Math.round(L * c), O = Math.min(
-          this.canvas.width - N,
-          Math.round(Y * c)
+        const c = window.devicePixelRatio || 1, d = Math.max(0, s.padding || 0), g = this.canvas.width / c, w = this.canvas.height / c, p = t - d, x = e - d, v = n + d * 2, C = i + d * 2, E = Math.max(1, Math.round(v * c)), A = Math.max(1, Math.round(C * c)), b = Math.max(0, p), I = Math.max(0, x), L = Math.min(g, p + v), B = Math.min(w, x + C), F = Math.max(0, L - b), T = Math.max(0, B - I), H = Math.round(b * c), P = Math.round(I * c), V = Math.min(
+          this.canvas.width - H,
+          Math.round(F * c)
         ), U = Math.min(
-          this.canvas.height - E,
-          Math.round(z * c)
-        ), V = Math.round((b - p) * c), ot = Math.round((L - x) * c), X = document.createElement("canvas");
-        X.width = $, X.height = H;
-        const T = X.getContext("2d", {
+          this.canvas.height - P,
+          Math.round(T * c)
+        ), Y = Math.round((b - p) * c), st = Math.round((I - x) * c), X = document.createElement("canvas");
+        X.width = E, X.height = A;
+        const z = X.getContext("2d", {
           alpha: !0,
           desynchronized: !1,
           willReadFrequently: !1
         });
-        if (!T)
+        if (!z)
           throw new Error("无法获取2D绘图上下文");
-        T.imageSmoothingEnabled = !1, s.fillColor && (T.fillStyle = s.fillColor, T.fillRect(0, 0, $, H)), O > 0 && U > 0 && T.drawImage(
+        z.imageSmoothingEnabled = !1, s.fillColor && (z.fillStyle = s.fillColor, z.fillRect(0, 0, E, A)), V > 0 && U > 0 && z.drawImage(
           this.backgroundImage,
-          N,
-          E,
-          O,
-          U,
+          H,
+          P,
           V,
-          ot,
-          O,
+          U,
+          Y,
+          st,
+          V,
           U
         );
-        const tt = X.toDataURL("image/png", 1).replace(/^data:image\/png;base64,/, "");
+        const Q = X.toDataURL("image/png", 1).replace(/^data:image\/png;base64,/, "");
         clearTimeout(l), a({
-          image: tt,
-          adjusted_width: $,
-          adjusted_height: H,
+          image: Q,
+          adjusted_width: E,
+          adjusted_height: A,
           logical_x: p,
           logical_y: x,
           logical_width: v,
-          logical_height: R
+          logical_height: C
         });
       } catch (c) {
         clearTimeout(l), r(new Error(`裁剪背景图像失败: ${c.message || c}`));
@@ -2642,24 +2673,24 @@ class hn {
             this.annotations.forEach((x, v) => {
               try {
                 x.drawToScreenshot(p);
-              } catch (R) {
-                P.error(`[截图] 绘制标注 ${v} 失败`, R);
+              } catch (C) {
+                W.error(`[截图] 绘制标注 ${v} 失败`, C);
               }
             });
           }
-          let u;
-          u = r.toDataURL("image/png"), clearTimeout(a), i(u);
-        } catch (u) {
-          P.error("[截图] 绘制过程出错", u);
+          let d;
+          d = r.toDataURL("image/png"), clearTimeout(a), i(d);
+        } catch (d) {
+          W.error("[截图] 绘制过程出错", d);
           try {
             const g = r.toDataURL("image/png");
             clearTimeout(a), i(g);
           } catch {
-            clearTimeout(a), s(new Error(`渲染失败: ${u.message || u}`));
+            clearTimeout(a), s(new Error(`渲染失败: ${d.message || d}`));
           }
         }
-      }, c.onerror = (u) => {
-        P.error("[截图] 图像加载失败", u), clearTimeout(a), s(new Error("图像加载失败"));
+      }, c.onerror = (d) => {
+        W.error("[截图] 图像加载失败", d), clearTimeout(a), s(new Error("图像加载失败"));
       }, c.src = `data:image/png;base64,${t.image}`;
     });
   }
@@ -2685,7 +2716,7 @@ class hn {
   }
   // 更新样式
   updateStyle(t) {
-    this.currentStyle = { ...this.currentStyle, ...t }, this.currentTool === d.Pen && (t.color || t.lineWidth) && this.updateToolCursor(), this.onStateChange?.();
+    this.currentStyle = { ...this.currentStyle, ...t }, this.currentTool === u.Pen && (t.color || t.lineWidth) && this.updateToolCursor(), this.onStateChange?.();
   }
   // 更新文字大小
   updateTextSize(t) {
@@ -2693,7 +2724,7 @@ class hn {
   }
   // 更新马赛克大小
   updateMosaicSize(t) {
-    this.mosaicSize = t, this.currentTool === d.Mosaic && this.updateToolCursor(), this.onStateChange?.();
+    this.mosaicSize = t, this.currentTool === u.Mosaic && this.updateToolCursor(), this.onStateChange?.();
   }
   // 删除指定标注
   deleteAnnotation(t) {
@@ -2702,7 +2733,7 @@ class hn {
   }
   // 更新文字标注内容
   updateTextAnnotation(t, e) {
-    if (t.getData().type === d.Text) {
+    if (t.getData().type === u.Text) {
       if (t.getData().text === e) {
         this.clearEditingAnnotation();
         return;
@@ -2728,29 +2759,29 @@ class hn {
   async createPinLikeWindow(t) {
     if (this.selectionRect)
       try {
-        const { x: e, y: n, width: i, height: s } = this.selectionRect, a = await q("get_window_info"), r = a?.scale || 1, l = Math.round(a.x + e * r), c = Math.round(a.y + n * r), u = Math.round(i * r), g = Math.round(s * r), w = Math.round(a.x + window.innerWidth * r), p = t === "ocr" ? Math.round(l - Math.max(0, u - u) / 2) : l, x = t === "ocr" ? Math.max(a.x, Math.min(p, w - u)) : l, v = {}, R = await this.cropFromBackground(e, n, i, s, v);
-        if (!R?.image)
+        const { x: e, y: n, width: i, height: s } = this.selectionRect, a = await j("get_window_info"), r = a?.scale || 1, l = Math.round(a.x + e * r), c = Math.round(a.y + n * r), d = Math.round(i * r), g = Math.round(s * r), w = Math.round(a.x + window.innerWidth * r), p = t === "ocr" ? Math.round(l - Math.max(0, d - d) / 2) : l, x = t === "ocr" ? Math.max(a.x, Math.min(p, w - d)) : l, v = {}, C = await this.cropFromBackground(e, n, i, s, v);
+        if (!C?.image)
           throw new Error("Failed to crop from background image");
-        const $ = await this.renderWithAnnotations(R, r, "save");
-        await q("create_pin_window", {
+        const E = await this.renderWithAnnotations(C, r, "save");
+        await j("create_pin_window", {
           mode: t,
-          imageData: $,
+          imageData: E,
           x,
           y: c,
-          width: u,
+          width: d,
           height: g
         }), this.onStateChange?.(), setTimeout(() => {
           new se("screenshot").close();
         }, 100);
       } catch (e) {
-        throw P.error(`[截图] 创建${t === "ocr" ? "文字识别" : "贴图"}窗口失败`, e), e;
+        throw W.error(`[截图] 创建${t === "ocr" ? "文字识别" : "贴图"}窗口失败`, e), e;
       }
   }
   // 处理颜色取样
   async handleColorPicking(t) {
     if (this.selectionRect)
       try {
-        const e = await q("get_window_info"), n = e?.scale || 1, i = Math.round(e.x + (this.selectionRect.x + t.x - this.selectionRect.x) * n), s = Math.round(e.y + (this.selectionRect.y + t.y - this.selectionRect.y) * n), a = await q("get_pixel_color", {
+        const e = await j("get_window_info"), n = e?.scale || 1, i = Math.round(e.x + (this.selectionRect.x + t.x - this.selectionRect.x) * n), s = Math.round(e.y + (this.selectionRect.y + t.y - this.selectionRect.y) * n), a = await j("get_pixel_color", {
           x: i,
           y: s
         }), r = this.rgbToHex(a.r, a.g, a.b), l = {
@@ -2762,31 +2793,31 @@ class hn {
           this.colorPickerState.isCopied = !1, this.draw();
         }, 1e3);
       } catch (e) {
-        P.error("[截图] 获取像素颜色失败", e);
+        W.error("[截图] 获取像素颜色失败", e);
       }
   }
   // 实时更新颜色预览（鼠标移动时调用）
   async updateColorPreview(t) {
     if (this.selectionRect)
       try {
-        const e = await q("get_window_info"), n = e?.scale || 1, i = this.colorPickerState.zoomFactor, s = Math.floor(i / 2), a = Math.round(e.x + t.x * n), r = Math.round(e.y + t.y * n), l = await q("get_screen_preview", {
+        const e = await j("get_window_info"), n = e?.scale || 1, i = this.colorPickerState.zoomFactor, s = Math.floor(i / 2), a = Math.round(e.x + t.x * n), r = Math.round(e.y + t.y * n), l = await j("get_screen_preview", {
           x: a - s,
           y: r - s,
           width: i,
           height: i
         }), c = new Image();
         c.src = `data:image/png;base64,${l.image}`, await c.decode();
-        const u = await createImageBitmap(c);
-        this.colorPickerState.previewImage = u;
+        const d = await createImageBitmap(c);
+        this.colorPickerState.previewImage?.close?.(), this.colorPickerState.previewImage = d;
         const w = new OffscreenCanvas(i, i).getContext("2d");
         if (w) {
-          w.drawImage(u, 0, 0, i, i);
+          w.drawImage(d, 0, 0, i, i);
           const p = w.getImageData(s, s, 1, 1).data, x = { r: p[0], g: p[1], b: p[2] }, v = this.rgbToHex(x.r, x.g, x.b);
           this.colorPickerState.colorInfo = { rgb: x, hex: v, position: t };
         }
         this.draw();
       } catch (e) {
-        P.error("[截图] 更新颜色预览失败", e);
+        W.error("[截图] 更新颜色预览失败", e);
       }
   }
   // 节流版本的颜色预览更新
@@ -2811,268 +2842,268 @@ class hn {
       try {
         const t = performance.now();
         let e = 0, n = 0, i = 0, s = 0, a = 0;
-        const { x: r, y: l, width: c, height: u } = this.selectionRect, g = window.devicePixelRatio || 1, w = c * g, p = u * g, x = this.canvasPool.acquire(w, p), v = x.getContext("2d");
+        const { x: r, y: l, width: c, height: d } = this.selectionRect, g = window.devicePixelRatio || 1, w = c * g, p = d * g, x = this.canvasPool.acquire(w, p), v = x.getContext("2d");
         if (!v)
           throw this.canvasPool.release(x), new Error("无法创建临时canvas");
-        const R = r * g, $ = l * g, H = performance.now();
+        const C = r * g, E = l * g, A = performance.now();
         v.drawImage(
           this.backgroundImage,
-          R,
-          $,
+          C,
+          E,
           w,
           p,
           0,
           0,
           w,
           p
-        ), e = Math.round(performance.now() - H);
-        const b = performance.now(), { recognizeFromCanvas: L } = await Mt.loadOCR();
+        ), e = Math.round(performance.now() - A);
+        const b = performance.now(), { recognizeFromCanvas: I } = await bt.loadOCR();
         n = Math.round(performance.now() - b);
-        const D = performance.now(), W = await L(x);
-        i = Math.round(performance.now() - D), this.canvasPool.release(x);
-        const Y = {
+        const L = performance.now(), B = await I(x);
+        i = Math.round(performance.now() - L), this.canvasPool.release(x);
+        const F = {
           cropDurationMs: e,
           ocrModuleLoadDurationMs: n,
           ocrRecognitionDurationMs: i,
-          confidence: W.confidence,
-          rawLineCount: W.blocks.length,
-          textLength: W.full_text.trim().length
+          confidence: B.confidence,
+          rawLineCount: B.blocks.length,
+          textLength: B.full_text.trim().length
         };
-        P.info("[OCR] 识别耗时统计", Y), mt.log("[OCR] recognition timing", Y);
-        const z = W.blocks, N = performance.now(), E = Be(z);
-        s = Math.round(performance.now() - N);
-        const O = E.map((f) => f.text).join(`
+        W.info("[OCR] 识别耗时统计", F), mt.log("[OCR] recognition timing", F);
+        const T = B.blocks, H = performance.now(), P = _e(T);
+        s = Math.round(performance.now() - H);
+        const V = P.map((f) => f.text).join(`
 
 `), U = {
-          rawLineCount: z.length,
-          paragraphCount: E.length,
+          rawLineCount: T.length,
+          paragraphCount: P.length,
           durationMs: s,
-          paragraphs: E.map((f, I) => ({
-            index: I,
+          paragraphs: P.map((f, $) => ({
+            index: $,
             text: f.text,
             blockCount: f.blocks.length,
             isCodeBlock: !!f.isCodeBlock,
             isStructuredBlock: !!f.isStructuredBlock,
             bbox: f.bbox,
-            sourceBlocks: f.blocks.map((lt) => ({
-              text: lt.text,
-              x: lt.x,
-              y: lt.y,
-              width: lt.width,
-              height: lt.height
+            sourceBlocks: f.blocks.map((ot) => ({
+              text: ot.text,
+              x: ot.x,
+              y: ot.y,
+              width: ot.width,
+              height: ot.height
             }))
           }))
         };
-        if (P.info("[OCR] 版面重组完成", U), mt.log("[OCR] layout reflow complete", U), !O || !O.trim()) {
+        if (W.info("[OCR] 版面重组完成", U), mt.log("[OCR] layout reflow complete", U), !V || !V.trim()) {
           this.translationOverlay.isLoading = !1, this.translationOverlay.isVisible = !1, this.draw(), this.onStateChange?.();
           return;
         }
-        const V = this.translationOverlay.engine;
-        this.translationOverlay.sourceLanguage = "auto", this.translationOverlay.targetLanguage = this.getAutoTargetLanguage(zt(O));
-        const ot = (f) => {
-          const I = f.trim();
-          return !!(I.match(/^(sudo|npm|yarn|pip|git|cd|ls|cat|chmod|chown|mkdir|rm|cp|mv|curl|wget|brew|apt|yum|dnf|sh|SH|Bash|PowerShell|Fish|Yarn|pnpm|deno|bun|Cargo)\s+\S+/) && !I.match(/^(If|When|Click|Please|You|After|Before|Then|Open|Go|Download)/i));
+        const Y = this.translationOverlay.engine;
+        this.translationOverlay.sourceLanguage = "auto", this.translationOverlay.targetLanguage = this.getAutoTargetLanguage(zt(V));
+        const st = (f) => {
+          const $ = f.trim();
+          return !!($.match(/^(sudo|npm|yarn|pip|git|cd|ls|cat|chmod|chown|mkdir|rm|cp|mv|curl|wget|brew|apt|yum|dnf|sh|SH|Bash|PowerShell|Fish|Yarn|pnpm|deno|bun|Cargo)\s+\S+/) && !$.match(/^(If|When|Click|Please|You|After|Before|Then|Open|Go|Download)/i));
         };
         let X = "";
-        const T = zt(O), B = {
-          detectedLanguage: T,
-          textLength: O.trim().length,
-          textPreview: O.trim().slice(0, 500)
+        const z = zt(V), O = {
+          detectedLanguage: z,
+          textLength: V.trim().length,
+          textPreview: V.trim().slice(0, 500)
         };
-        P.info("[OCR] 翻译语言检测完成", B), mt.log("[OCR] translation language detected", B), Dt(T) && (this.translationOverlay.sourceLanguage = T, this.translationOverlay.targetLanguage = this.getAutoTargetLanguage(T));
-        const tt = V === "offline" ? Mt.loadOfflineTranslator() : null, nt = (f) => f.includes("插件") && f.includes("未启用") ? f.includes("translation") ? "OCR识别已完成，但翻译插件未启用，请在插件设置中安装并启用 Translation 插件" : f : V === "offline" ? f.includes("未激活") || f.includes("未下载") || f.includes("运行时未安装") ? f : f.includes("超时") ? "模型加载超时，请重试" : f.includes("离线翻译暂仅支持") ? f : "离线翻译失败: " + f.substring(0, 50) : f.includes("timeout") || f.includes("超时") ? "翻译超时，请检查网络连接" : f.includes("network") || f.includes("网络") || f.includes("请求") || f.includes("令牌") ? "翻译失败，请检查网络连接" : f.trim() ? f.slice(0, 80) : "翻译失败，请检查网络连接", S = async () => {
-          if (!tt)
+        W.info("[OCR] 翻译语言检测完成", O), mt.log("[OCR] translation language detected", O), Wt(z) && (this.translationOverlay.sourceLanguage = z, this.translationOverlay.targetLanguage = this.getAutoTargetLanguage(z));
+        const Q = Y === "offline" ? bt.loadOfflineTranslator() : null, tt = (f) => f.includes("插件") && f.includes("未启用") ? f.includes("translation") ? "OCR识别已完成，但翻译插件未启用，请在插件设置中安装并启用 Translation 插件" : f : Y === "offline" ? f.includes("未激活") || f.includes("未下载") || f.includes("运行时未安装") ? f : f.includes("超时") ? "模型加载超时，请重试" : f.includes("离线翻译暂仅支持") ? f : "离线翻译失败: " + f.substring(0, 50) : f.includes("timeout") || f.includes("超时") ? "翻译超时，请检查网络连接" : f.includes("network") || f.includes("网络") || f.includes("请求") || f.includes("令牌") ? "翻译失败，请检查网络连接" : f.trim() ? f.slice(0, 80) : "翻译失败，请检查网络连接", S = async () => {
+          if (!Q)
             throw new Error("离线翻译模块未加载");
           const {
             translateOffline: f,
-            canUseOfflineTranslation: I,
-            warmupOfflineTranslator: lt,
-            getModelCacheInfo: h
-          } = await tt, k = I();
-          if (this.offlineModelActivated && !k)
-            if ((await h()).isCached)
-              await lt();
+            canUseOfflineTranslation: $,
+            warmupOfflineTranslator: ot,
+            getModelCacheInfo: at
+          } = await Q, h = $();
+          if (this.offlineModelActivated && !h)
+            if ((await at()).isCached)
+              await ot();
             else
               throw new Error("离线翻译模型未下载，请在设置-翻译配置中下载模型");
           else if (!this.offlineModelActivated)
             throw new Error("离线翻译模型未激活，请在设置-翻译配置中激活模型");
           return f;
-        }, J = async (f, I, lt) => {
+        }, q = async (f, $, ot) => {
           if (!f.trim())
             return f;
-          if (V === "offline") {
-            if (I !== "en" || lt !== "zh")
+          if (Y === "offline") {
+            if ($ !== "en" || ot !== "zh")
               throw new Error("离线翻译暂仅支持英译中，请切换 Google 或 Bing 进行中译英");
             return (await S())(f);
           }
-          return await q("translate_text", {
+          return await j("translate_text", {
             text: f,
-            from: I,
-            to: lt,
-            engine: V
+            from: $,
+            to: ot,
+            engine: Y
           });
-        }, C = (f) => {
-          const I = f.trim();
-          return /^(?:option|description|name|value|type|default|example|required)$/i.test(I) ? !1 : /^[A-Za-z_][A-Za-z0-9_-]{1,32}$/.test(I);
-        }, dt = async (f, I, lt) => {
-          const h = f.trim();
-          if (!h || ot(h))
+        }, R = (f) => {
+          const $ = f.trim();
+          return /^(?:option|description|name|value|type|default|example|required)$/i.test($) ? !1 : /^[A-Za-z_][A-Za-z0-9_-]{1,32}$/.test($);
+        }, gt = async (f, $, ot) => {
+          const at = f.trim();
+          if (!at || st(at))
             return f;
-          const k = f.match(/^(\s*)(\S+)(\s{2,})(.+?)(\s*)$/);
-          if (k) {
-            const [, gt, it, G, St, Bt] = k, $t = zt(it), ue = C(it) || !Dt($t) ? it : await J(it, $t, this.getAutoTargetLanguage($t)), Nt = zt(St), ge = Dt(Nt) && !ot(St) ? await J(St, Nt, this.getAutoTargetLanguage(Nt)) : St;
-            return `${gt}${ue}${G}${ge}${Bt}`;
+          const h = f.match(/^(\s*)(\S+)(\s{2,})(.+?)(\s*)$/);
+          if (h) {
+            const [, rt, et, G, ut, Lt] = h, Ot = zt(et), ue = R(et) || !Wt(Ot) ? et : await q(et, Ot, this.getAutoTargetLanguage(Ot)), $t = zt(ut), ge = Wt($t) && !st(ut) ? await q(ut, $t, this.getAutoTargetLanguage($t)) : ut;
+            return `${rt}${ue}${G}${ge}${Lt}`;
           }
-          if (C(h))
+          if (R(at))
             return f;
-          const F = zt(h);
-          if (!Dt(F))
+          const k = zt(at);
+          if (!Wt(k))
             return f;
-          const Z = this.getAutoTargetLanguage(F), et = await J(h, F, Z), Q = {
-            paragraphIndex: I,
-            blockIndex: lt,
-            sourceLanguage: F,
-            targetLanguage: Z,
-            sourceText: h,
-            translatedText: et.slice(0, 200)
-          };
-          return P.info("[OCR] 结构化块翻译完成", Q), mt.log("[OCR] structured block translation complete", Q), et;
-        }, at = async (f, I) => {
-          const lt = performance.now(), h = (et) => ({
-            index: I,
-            durationMs: Math.round(performance.now() - lt),
-            ...et
-          }), k = zt(f.text), F = this.getAutoTargetLanguage(k), Z = {
-            index: I,
-            text: f.text,
+          const J = this.getAutoTargetLanguage(k), _ = await q(at, k, J), it = {
+            paragraphIndex: $,
+            blockIndex: ot,
             sourceLanguage: k,
-            targetLanguage: F,
-            engine: V,
+            targetLanguage: J,
+            sourceText: at,
+            translatedText: _.slice(0, 200)
+          };
+          return W.info("[OCR] 结构化块翻译完成", it), mt.log("[OCR] structured block translation complete", it), _;
+        }, yt = async (f, $) => {
+          const ot = performance.now(), at = (_) => ({
+            index: $,
+            durationMs: Math.round(performance.now() - ot),
+            ..._
+          }), h = zt(f.text), k = this.getAutoTargetLanguage(h), J = {
+            index: $,
+            text: f.text,
+            sourceLanguage: h,
+            targetLanguage: k,
+            engine: Y,
             structured: !!f.isStructuredBlock
           };
-          if (P.info("[OCR] 段落翻译方向", Z), mt.log("[OCR] paragraph translation direction", Z), !Dt(k)) {
+          if (W.info("[OCR] 段落翻译方向", J), mt.log("[OCR] paragraph translation direction", J), !Wt(h)) {
             f.translatedText = f.text;
-            const et = h({
+            const _ = at({
               skipped: !0,
               cancelled: !1,
               errorMessage: "部分文本暂不支持翻译，已保留原文"
-            }), Q = {
-              index: I,
-              detectedLanguage: k,
-              durationMs: et.durationMs,
+            }), it = {
+              index: $,
+              detectedLanguage: h,
+              durationMs: _.durationMs,
               text: f.text
             };
-            return P.warn("[OCR] 跳过不支持的段落语言", Q), mt.log("[OCR] skip unsupported paragraph language", Q), et;
+            return W.warn("[OCR] 跳过不支持的段落语言", it), mt.log("[OCR] skip unsupported paragraph language", it), _;
           }
           try {
             if (f.isStructuredBlock && f.blocks.length > 0) {
-              const gt = async (G, St) => {
-                const Bt = await dt(G.text, I, St);
-                return G.translatedText = Bt, Bt;
-              }, it = [];
-              if (V === "offline")
+              const rt = async (G, ut) => {
+                const Lt = await gt(G.text, $, ut);
+                return G.translatedText = Lt, Lt;
+              }, et = [];
+              if (Y === "offline")
                 for (let G = 0; G < f.blocks.length; G += 1)
-                  it.push(await gt(f.blocks[G], G));
+                  et.push(await rt(f.blocks[G], G));
               else
-                it.push(
+                et.push(
                   ...await Promise.all(
-                    f.blocks.map((G, St) => gt(G, St))
+                    f.blocks.map((G, ut) => rt(G, ut))
                   )
                 );
-              f.translatedText = it.join(" ");
-            } else if (ot(f.text) || f.isCodeBlock) {
+              f.translatedText = et.join(" ");
+            } else if (st(f.text) || f.isCodeBlock) {
               f.translatedText = f.text;
-              const gt = f.isCodeBlock ? "code_block" : "command_like_text", it = h({ skipped: !0, cancelled: !1 }), G = {
-                index: I,
-                reason: gt,
-                durationMs: it.durationMs,
+              const rt = f.isCodeBlock ? "code_block" : "command_like_text", et = at({ skipped: !0, cancelled: !1 }), G = {
+                index: $,
+                reason: rt,
+                durationMs: et.durationMs,
                 text: f.text
               };
-              return P.info("[OCR] 跳过代码段翻译", G), mt.log("[OCR] skip code paragraph translation", G), it;
+              return W.info("[OCR] 跳过代码段翻译", G), mt.log("[OCR] skip code paragraph translation", G), et;
             } else
-              f.translatedText = await J(
+              f.translatedText = await q(
                 f.text,
-                k,
-                F
+                h,
+                k
               );
-            const et = h({ skipped: !1, cancelled: !1 }), Q = {
-              index: I,
-              durationMs: et.durationMs,
-              sourceLanguage: k,
-              targetLanguage: F,
-              engine: V,
+            const _ = at({ skipped: !1, cancelled: !1 }), it = {
+              index: $,
+              durationMs: _.durationMs,
+              sourceLanguage: h,
+              targetLanguage: k,
+              engine: Y,
               structured: !!f.isStructuredBlock,
               sourceLength: f.text.length,
               translatedLength: (f.translatedText || "").length,
               translatedPreview: (f.translatedText || "").slice(0, 300)
             };
-            return P.info("[OCR] 段落翻译完成", Q), mt.log("[OCR] paragraph translation complete", Q), et;
-          } catch (et) {
-            const Q = et instanceof Error ? et.message : String(et);
-            if (Q === "翻译已取消")
-              return h({ skipped: !1, cancelled: !0 });
+            return W.info("[OCR] 段落翻译完成", it), mt.log("[OCR] paragraph translation complete", it), _;
+          } catch (_) {
+            const it = _ instanceof Error ? _.message : String(_);
+            if (it === "翻译已取消")
+              return at({ skipped: !1, cancelled: !0 });
             f.translatedText = f.text;
-            const gt = nt(Q), it = h({
+            const rt = tt(it), et = at({
               skipped: !1,
               cancelled: !1,
-              errorMessage: gt
+              errorMessage: rt
             }), G = {
-              index: I,
-              durationMs: it.durationMs,
-              sourceLanguage: k,
-              targetLanguage: F,
-              engine: V,
-              error: Q,
+              index: $,
+              durationMs: et.durationMs,
+              sourceLanguage: h,
+              targetLanguage: k,
+              engine: Y,
+              error: it,
               structured: !!f.isStructuredBlock,
               text: f.text
             };
-            return P.error("[OCR] 段落翻译失败", G), mt.log("[OCR] paragraph translation failed", G), it;
+            return W.error("[OCR] 段落翻译失败", G), mt.log("[OCR] paragraph translation failed", G), et;
           }
-        }, wt = performance.now();
-        let st = [];
-        if (V === "offline")
-          for (let f = 0; f < E.length; f += 1) {
-            const I = await at(E[f], f);
-            if (st.push(I), I.cancelled)
+        }, nt = performance.now();
+        let ct = [];
+        if (Y === "offline")
+          for (let f = 0; f < P.length; f += 1) {
+            const $ = await yt(P[f], f);
+            if (ct.push($), $.cancelled)
               return;
-            if (I.errorMessage) {
-              X = I.errorMessage;
+            if ($.errorMessage) {
+              X = $.errorMessage;
               break;
             }
           }
         else {
-          if (st = await Promise.all(
-            E.map((f, I) => at(f, I))
-          ), st.some((f) => f.cancelled))
+          if (ct = await Promise.all(
+            P.map((f, $) => yt(f, $))
+          ), ct.some((f) => f.cancelled))
             return;
-          X = st.find((f) => f.errorMessage)?.errorMessage || "";
+          X = ct.find((f) => f.errorMessage)?.errorMessage || "";
         }
-        a = Math.round(performance.now() - wt);
-        const ut = {
+        a = Math.round(performance.now() - nt);
+        const ft = {
           durationMs: a,
-          engine: V,
-          paragraphCount: E.length,
-          translatedParagraphCount: st.filter((f) => !f.skipped && !f.errorMessage).length,
-          skippedParagraphCount: st.filter((f) => f.skipped).length,
-          failedParagraphCount: st.filter((f) => !!f.errorMessage).length
+          engine: Y,
+          paragraphCount: P.length,
+          translatedParagraphCount: ct.filter((f) => !f.skipped && !f.errorMessage).length,
+          skippedParagraphCount: ct.filter((f) => f.skipped).length,
+          failedParagraphCount: ct.filter((f) => !!f.errorMessage).length
         };
-        P.info("[OCR] 翻译耗时统计", ut), mt.log("[OCR] translation timing", ut);
-        const _t = E.map((f) => this.toDisplayParagraph(f, g)), Ht = _t.map((f) => this.toLegacyOverlayBlock(f));
-        this.translationOverlay.blocks = Ht, this.translationOverlay.paragraphBlocks = _t, this.translationOverlay.isLoading = !1, this.translationOverlay.errorMessage = X || void 0;
-        const yt = {
+        W.info("[OCR] 翻译耗时统计", ft), mt.log("[OCR] translation timing", ft);
+        const Ct = P.map((f) => this.toDisplayParagraph(f, g)), Et = Ct.map((f) => this.toLegacyOverlayBlock(f));
+        this.translationOverlay.blocks = Et, this.translationOverlay.paragraphBlocks = Ct, this.translationOverlay.isLoading = !1, this.translationOverlay.errorMessage = X || void 0;
+        const Dt = {
           cropDurationMs: e,
           ocrModuleLoadDurationMs: n,
           ocrRecognitionDurationMs: i,
           reflowDurationMs: s,
           translationDurationMs: a,
           totalDurationMs: Math.round(performance.now() - t),
-          rawLineCount: z.length,
-          paragraphCount: E.length,
-          engine: V
+          rawLineCount: T.length,
+          paragraphCount: P.length,
+          engine: Y
         };
-        P.info("[OCR] 截图翻译总耗时统计", yt), mt.log("[OCR] pipeline timing", yt), this.draw(), this.onStateChange?.();
+        W.info("[OCR] 截图翻译总耗时统计", Dt), mt.log("[OCR] pipeline timing", Dt), this.draw(), this.onStateChange?.();
       } catch (t) {
-        P.error("[OCR] OCR翻译失败:", t);
+        W.error("[OCR] OCR翻译失败:", t);
         const e = t instanceof Error ? t.message : String(t);
         this.translationOverlay.isLoading = !1, this.translationOverlay.isVisible = !0, this.translationOverlay.errorMessage = this.getOcrTranslationErrorMessage(e), this.draw(), this.onStateChange?.();
       }
@@ -3122,7 +3153,7 @@ class hn {
   // 清除翻译覆盖层
   async clearTranslationOverlay() {
     try {
-      const { cancelOfflineTranslation: t } = await Mt.loadOfflineTranslator();
+      const { cancelOfflineTranslation: t } = await bt.loadOfflineTranslator();
       t();
     } catch {
     }
@@ -3165,7 +3196,7 @@ class hn {
   }
   // 销毁
   destroy() {
-    Mt.loadOfflineTranslator().then(({ cancelOfflineTranslation: e }) => e()).catch(() => {
+    bt.loadOfflineTranslator().then(({ cancelOfflineTranslation: e }) => e()).catch(() => {
     }), this.canvasPool.clear(), this.throttleTimer && (cancelAnimationFrame(this.throttleTimer), this.throttleTimer = null), this.backgroundImage && (this.backgroundImage.onload = null, this.backgroundImage.onerror = null, this.backgroundImage.src = "", this.backgroundImage = null), this.annotations.forEach((e) => {
       typeof e.destroy == "function" && e.destroy();
     }), this.annotations = [], this.annotationUndoStack = [], this.annotationRedoStack = [], this.pendingDragSnapshot = null, this.pendingResizeSnapshot = null, this.currentAnnotation = null, this.selectedAnnotation = null, this.hoveredAnnotation = null, this.draggedAnnotation = null, this.resizingAnnotation = null, this.editingAnnotation = null, this.selectionRect = null, this.dragStartPoint = null, this.resizeStartBounds = null, this.resizeOperation = null, this.pendingSnapWindow = null, this.dragStartPosition = null, this.snappedWindow = null, this.allWindows = [], this.translationOverlay.blocks = [], this.translationOverlay.paragraphBlocks = [], this.translationOverlay.isVisible = !1, this.translationOverlay.isLoading = !1, this.colorPickerState.previewImage && (this.colorPickerState.previewImage.close?.(), this.colorPickerState.previewImage = void 0), this.colorPickerState.isActive = !1, this.colorPickerState.isVisible = !1, this.colorPickerState.isCopied = !1, this.colorPickerState.colorInfo = void 0, this.eventHandler.unbind(), this.canvas.removeEventListener("mousedown", this.mouseDownHandler), this.canvas.removeEventListener("mousemove", this.mouseMoveHandler), this.canvas.removeEventListener("mouseup", this.mouseUpHandler), this.canvas.removeEventListener("dblclick", this.doubleClickHandler), window.removeEventListener("keydown", this.keyDownHandler), window.removeEventListener("keyup", this.keyUpHandler), this.onStateChange = void 0, this.onTextInputRequest = void 0, this.onColorPicked = void 0;
@@ -3416,19 +3447,19 @@ const dn = kt("arrow-left-up", !0, function(o) {
 }, Ln = { class: "line-width-selector" }, Wn = ["onClick", "title"], In = {
   key: 1,
   class: "style-group color-picker-group"
-}, _n = ["title"], Hn = {
+}, Bn = ["title"], Hn = {
   key: 0,
   class: "color-picker-panel"
-}, Bn = { class: "color-row" }, En = ["onClick", "title"], On = { class: "custom-color-wrapper" }, $n = ["title"], Nn = ["value"], Vn = {
+}, _n = { class: "color-row" }, En = ["onClick", "title"], On = { class: "custom-color-wrapper" }, $n = ["title"], Nn = ["value"], Vn = {
   key: 2,
   class: "style-group"
-}, Fn = { class: "text-size-selector" }, Yn = ["onClick", "title"], Un = {
+}, Yn = { class: "text-size-selector" }, Fn = ["onClick", "title"], Un = {
   key: 3,
   class: "style-group"
 }, Xn = { class: "mosaic-size-selector" }, jn = ["onClick", "title"], Zn = {
   key: 4,
   class: "style-group"
-}, Gn = { class: "translate-engine-selector" }, qn = ["onClick", "title"], Kn = /* @__PURE__ */ ne({
+}, qn = { class: "translate-engine-selector" }, Gn = ["onClick", "title"], Kn = /* @__PURE__ */ ne({
   __name: "ToolbarSection",
   props: {
     currentTool: {},
@@ -3442,40 +3473,40 @@ const dn = kt("arrow-left-up", !0, function(o) {
   },
   emits: ["tool-select", "color-change", "line-width-change", "text-size-change", "mosaic-size-change", "translate-engine-change", "undo", "delete", "save", "confirm", "cancel"],
   setup(o, { expose: t, emit: e }) {
-    const n = ht(!1), i = ht(null), { t: s } = ke(), a = o, r = e, l = ct(() => [
-      { type: d.Select, icon: wn, title: s("screenshot.select") },
-      { type: d.Rectangle, icon: mn, title: s("screenshot.rectangle") },
-      { type: d.Arrow, icon: dn, title: s("screenshot.arrow") },
-      { type: d.Pen, icon: pn, title: s("screenshot.pen") },
-      { type: d.Mosaic, icon: xn, title: s("screenshot.mosaic") },
-      { type: d.Text, icon: fn, title: s("screenshot.text") },
-      { type: d.ColorPicker, icon: ee, title: s("screenshot.colorPicker") },
-      { type: d.Ocr, icon: Se, title: s("screenshot.ocr") },
-      { type: d.Translate, icon: be, title: s("screenshot.translate") },
-      { type: d.Pin, icon: Me, title: s("screenshot.pin") }
-    ]), c = ct(() => [
+    const n = ht(!1), i = ht(null), { t: s } = ke(), a = o, r = e, l = dt(() => [
+      { type: u.Select, icon: wn, title: s("screenshot.select") },
+      { type: u.Rectangle, icon: mn, title: s("screenshot.rectangle") },
+      { type: u.Arrow, icon: dn, title: s("screenshot.arrow") },
+      { type: u.Pen, icon: pn, title: s("screenshot.pen") },
+      { type: u.Mosaic, icon: xn, title: s("screenshot.mosaic") },
+      { type: u.Text, icon: fn, title: s("screenshot.text") },
+      { type: u.ColorPicker, icon: ee, title: s("screenshot.colorPicker") },
+      { type: u.Ocr, icon: Se, title: s("screenshot.ocr") },
+      { type: u.Translate, icon: be, title: s("screenshot.translate") },
+      { type: u.Pin, icon: Me, title: s("screenshot.pin") }
+    ]), c = dt(() => [
       { value: "google", label: "Google", short: "G" },
       { value: "bing", label: s("translate.bingTranslate"), short: "B" },
       { value: "offline", label: s("translate.offlineTranslate"), short: "离" }
-    ]), u = [2, 3, 5, 8], g = ["#ff4444", "#44ff44", "#4444ff"], w = [12, 14, 16, 18, 20, 24], p = [5, 8, 10, 15], x = ct(() => ![d.Select, d.ColorPicker, d.Ocr, d.Pin].includes(a.currentTool)), v = ct(
-      () => [d.Rectangle, d.Arrow, d.Pen].includes(a.currentTool)
-    ), R = ct(
-      () => [d.Rectangle, d.Arrow, d.Pen, d.Text].includes(a.currentTool)
-    ), $ = ct(() => a.currentTool === d.Text), H = ct(() => a.currentTool === d.Mosaic), b = ct(() => a.currentTool === d.Translate), L = (S) => r("tool-select", S), D = (S) => r("color-change", S), W = (S) => r("line-width-change", S), Y = (S) => r("text-size-change", S), z = (S) => r("mosaic-size-change", S), N = () => r("undo"), E = () => r("delete"), O = () => r("save"), U = () => r("confirm"), V = () => r("cancel"), ot = (S) => {
+    ]), d = [2, 3, 5, 8], g = ["#ff4444", "#44ff44", "#4444ff"], w = [12, 14, 16, 18, 20, 24], p = [5, 8, 10, 15], x = dt(() => ![u.Select, u.ColorPicker, u.Ocr, u.Pin].includes(a.currentTool)), v = dt(
+      () => [u.Rectangle, u.Arrow, u.Pen].includes(a.currentTool)
+    ), C = dt(
+      () => [u.Rectangle, u.Arrow, u.Pen, u.Text].includes(a.currentTool)
+    ), E = dt(() => a.currentTool === u.Text), A = dt(() => a.currentTool === u.Mosaic), b = dt(() => a.currentTool === u.Translate), I = (S) => r("tool-select", S), L = (S) => r("color-change", S), B = (S) => r("line-width-change", S), F = (S) => r("text-size-change", S), T = (S) => r("mosaic-size-change", S), H = () => r("undo"), P = () => r("delete"), V = () => r("save"), U = () => r("confirm"), Y = () => r("cancel"), st = (S) => {
       r("translate-engine-change", S);
     }, X = () => {
       n.value = !n.value;
-    }, T = (S) => {
-      D(S), n.value = !1;
-    }, B = () => {
-    }, tt = (S) => {
-      const J = S.target;
-      J.value && D(J.value);
+    }, z = (S) => {
+      L(S), n.value = !1;
+    }, O = () => {
+    }, Q = (S) => {
+      const q = S.target;
+      q.value && L(q.value);
     };
     Zt(() => a.currentTool, () => {
       n.value && (n.value = !1);
     });
-    const nt = () => {
+    const tt = () => {
       const S = i.value?.getBoundingClientRect();
       return {
         width: S?.width ?? 510,
@@ -3486,14 +3517,14 @@ const dn = kt("arrow-left-up", !0, function(o) {
       () => a.currentTool,
       () => n.value
     ], () => {
-      Ft(() => {
+      Vt(() => {
         window.dispatchEvent(new CustomEvent("screenshot-toolbar-resize", {
-          detail: nt()
+          detail: tt()
         }));
       });
     }, { immediate: !0 }), t({
-      getToolbarSize: nt
-    }), (S, J) => (j(), K(
+      getToolbarSize: tt
+    }), (S, q) => (Z(), K(
       "div",
       {
         ref_key: "toolbarContainerRef",
@@ -3501,20 +3532,20 @@ const dn = kt("arrow-left-up", !0, function(o) {
         class: "toolbar-container"
       },
       [
-        _(" 第一个面板：工具选择 + 操作按钮 "),
-        A("div", vn, [
-          _(" 工具选择区域 "),
-          A("div", kn, [
-            (j(!0), K(
+        N(" 第一个面板：工具选择 + 操作按钮 "),
+        D("div", vn, [
+          N(" 工具选择区域 "),
+          D("div", kn, [
+            (Z(!0), K(
               Tt,
               null,
-              Rt(l.value, (C) => (j(), K("button", {
-                key: C.type,
-                onClick: (dt) => L(C.type),
-                class: bt(["tool-btn", { active: S.currentTool === C.type }]),
-                title: C.title
+              Rt(l.value, (R) => (Z(), K("button", {
+                key: R.type,
+                onClick: (gt) => I(R.type),
+                class: St(["tool-btn", { active: S.currentTool === R.type }]),
+                title: R.title
               }, [
-                (j(), ie(we(C.icon), {
+                (Z(), ie(we(R.icon), {
                   theme: "outline",
                   size: "18",
                   strokeWidth: 3
@@ -3524,68 +3555,68 @@ const dn = kt("arrow-left-up", !0, function(o) {
               /* KEYED_FRAGMENT */
             ))
           ]),
-          _(" 分隔线 "),
-          J[0] || (J[0] = A(
+          N(" 分隔线 "),
+          q[0] || (q[0] = D(
             "div",
             { class: "toolbar-divider" },
             null,
             -1
             /* HOISTED */
           )),
-          _(" 操作按钮区域 "),
-          A("div", bn, [
-            A("button", {
-              onClick: N,
+          N(" 操作按钮区域 "),
+          D("div", bn, [
+            D("button", {
+              onClick: H,
               disabled: !S.canUndo,
               class: "action-btn undo",
-              title: ft(s)("screenshot.undo")
+              title: xt(s)("screenshot.undo")
             }, [
-              M(ft(yn), {
+              M(xt(yn), {
                 theme: "outline",
                 size: "18",
                 strokeWidth: 3
               })
             ], 8, Mn),
-            A("button", {
-              onClick: E,
+            D("button", {
+              onClick: P,
               disabled: !S.canDelete,
               class: "action-btn delete",
-              title: ft(s)("screenshot.delete")
+              title: xt(s)("screenshot.delete")
             }, [
-              M(ft(un), {
+              M(xt(un), {
                 theme: "outline",
                 size: "18",
                 strokeWidth: 3
               })
             ], 8, Cn),
-            A("button", {
-              onClick: O,
+            D("button", {
+              onClick: V,
               class: "action-btn save",
-              title: ft(s)("screenshot.save")
+              title: xt(s)("screenshot.save")
             }, [
-              M(ft(gn), {
+              M(xt(gn), {
                 theme: "outline",
                 size: "18",
                 strokeWidth: 3
               })
             ], 8, Tn),
-            A("button", {
+            D("button", {
               onClick: U,
               class: "action-btn confirm",
-              title: ft(s)("screenshot.confirm")
+              title: xt(s)("screenshot.confirm")
             }, [
-              M(ft(Ce), {
+              M(xt(Ce), {
                 theme: "outline",
                 size: "18",
                 strokeWidth: 3
               })
             ], 8, Rn),
-            A("button", {
-              onClick: V,
+            D("button", {
+              onClick: Y,
               class: "action-btn cancel",
-              title: ft(s)("screenshot.cancel")
+              title: xt(s)("screenshot.cancel")
             }, [
-              M(ft(Te), {
+              M(xt(Te), {
                 theme: "outline",
                 size: "18",
                 strokeWidth: 3
@@ -3593,26 +3624,26 @@ const dn = kt("arrow-left-up", !0, function(o) {
             ], 8, zn)
           ])
         ]),
-        _(" 第二个面板：样式设置区域 "),
-        x.value ? (j(), K("div", An, [
-          A("div", Pn, [
-            _(" 线宽设置 "),
-            v.value ? (j(), K("div", Dn, [
-              A("div", Ln, [
-                (j(), K(
+        N(" 第二个面板：样式设置区域 "),
+        x.value ? (Z(), K("div", An, [
+          D("div", Pn, [
+            N(" 线宽设置 "),
+            v.value ? (Z(), K("div", Dn, [
+              D("div", Ln, [
+                (Z(), K(
                   Tt,
                   null,
-                  Rt(u, (C) => A("button", {
-                    key: C,
-                    onClick: (dt) => W(C),
-                    class: bt(["width-btn", { active: S.currentLineWidth === C }]),
-                    title: `${C}px`
+                  Rt(d, (R) => D("button", {
+                    key: R,
+                    onClick: (gt) => B(R),
+                    class: St(["width-btn", { active: S.currentLineWidth === R }]),
+                    title: `${R}px`
                   }, [
-                    A(
+                    D(
                       "div",
                       {
                         class: "line-preview",
-                        style: xt({ height: `${C}px`, backgroundColor: S.currentColor })
+                        style: wt({ height: `${R}px`, backgroundColor: S.currentColor })
                       },
                       null,
                       4
@@ -3623,111 +3654,111 @@ const dn = kt("arrow-left-up", !0, function(o) {
                   /* STABLE_FRAGMENT */
                 ))
               ])
-            ])) : _("v-if", !0),
-            _(" 颜色设置 "),
-            R.value ? (j(), K("div", In, [
-              A("button", {
+            ])) : N("v-if", !0),
+            N(" 颜色设置 "),
+            C.value ? (Z(), K("div", In, [
+              D("button", {
                 onClick: X,
                 class: "color-trigger-btn",
-                style: xt({ backgroundColor: S.currentColor }),
-                title: ft(s)("screenshot.colorPicker")
-              }, J[1] || (J[1] = [
-                A(
+                style: wt({ backgroundColor: S.currentColor }),
+                title: xt(s)("screenshot.colorPicker")
+              }, q[1] || (q[1] = [
+                D(
                   "div",
                   { class: "color-trigger-inner" },
                   null,
                   -1
                   /* HOISTED */
                 )
-              ]), 12, _n),
-              _(" 颜色选择器面板 "),
-              n.value ? (j(), K("div", Hn, [
-                A("div", Bn, [
-                  _(" 预设颜色：红、绿、蓝 "),
-                  (j(), K(
+              ]), 12, Bn),
+              N(" 颜色选择器面板 "),
+              n.value ? (Z(), K("div", Hn, [
+                D("div", _n, [
+                  N(" 预设颜色：红、绿、蓝 "),
+                  (Z(), K(
                     Tt,
                     null,
-                    Rt(g, (C) => A("button", {
-                      key: C,
-                      onClick: (dt) => T(C),
-                      class: bt(["color-btn", { active: S.currentColor === C }]),
-                      style: xt({ backgroundColor: C }),
-                      title: C
+                    Rt(g, (R) => D("button", {
+                      key: R,
+                      onClick: (gt) => z(R),
+                      class: St(["color-btn", { active: S.currentColor === R }]),
+                      style: wt({ backgroundColor: R }),
+                      title: R
                     }, null, 14, En)),
                     64
                     /* STABLE_FRAGMENT */
                   )),
-                  _(" 自定义颜色选择器 "),
-                  A("div", On, [
-                    A("button", {
-                      onClick: B,
-                      class: bt(["color-btn custom-color-btn", { active: !g.includes(S.currentColor) }]),
-                      title: ft(s)("screenshot.customColor")
+                  N(" 自定义颜色选择器 "),
+                  D("div", On, [
+                    D("button", {
+                      onClick: O,
+                      class: St(["color-btn custom-color-btn", { active: !g.includes(S.currentColor) }]),
+                      title: xt(s)("screenshot.customColor")
                     }, [
-                      M(ft(ee), {
+                      M(xt(ee), {
                         theme: "outline",
                         size: "14",
                         strokeWidth: 3
                       })
                     ], 10, $n),
-                    A("input", {
+                    D("input", {
                       ref: "colorInputRef",
                       type: "color",
-                      onChange: tt,
+                      onChange: Q,
                       value: S.currentColor,
                       class: "color-input-hidden"
                     }, null, 40, Nn)
                   ])
                 ])
-              ])) : _("v-if", !0)
-            ])) : _("v-if", !0),
-            _(" 文字大小设置 "),
-            $.value ? (j(), K("div", Vn, [
-              A("div", Fn, [
-                (j(), K(
+              ])) : N("v-if", !0)
+            ])) : N("v-if", !0),
+            N(" 文字大小设置 "),
+            E.value ? (Z(), K("div", Vn, [
+              D("div", Yn, [
+                (Z(), K(
                   Tt,
                   null,
-                  Rt(w, (C) => A("button", {
-                    key: C,
-                    onClick: (dt) => Y(C),
-                    class: bt(["size-btn", { active: S.currentTextSize === C }]),
-                    title: `${C}px`
+                  Rt(w, (R) => D("button", {
+                    key: R,
+                    onClick: (gt) => F(R),
+                    class: St(["size-btn", { active: S.currentTextSize === R }]),
+                    title: `${R}px`
                   }, [
-                    A(
+                    D(
                       "span",
                       {
                         class: "size-text",
-                        style: xt({ fontSize: `${C}px` })
+                        style: wt({ fontSize: `${R}px` })
                       },
                       "A",
                       4
                       /* STYLE */
                     )
-                  ], 10, Yn)),
+                  ], 10, Fn)),
                   64
                   /* STABLE_FRAGMENT */
                 ))
               ])
-            ])) : _("v-if", !0),
-            _(" 马赛克大小设置 "),
-            H.value ? (j(), K("div", Un, [
-              A("div", Xn, [
-                (j(), K(
+            ])) : N("v-if", !0),
+            N(" 马赛克大小设置 "),
+            A.value ? (Z(), K("div", Un, [
+              D("div", Xn, [
+                (Z(), K(
                   Tt,
                   null,
-                  Rt(p, (C) => A("button", {
-                    key: C,
-                    onClick: (dt) => z(C),
-                    class: bt(["size-btn", { active: S.currentMosaicSize === C }]),
-                    title: `${ft(s)("screenshot.brush")} ${C * 3}px`
+                  Rt(p, (R) => D("button", {
+                    key: R,
+                    onClick: (gt) => T(R),
+                    class: St(["size-btn", { active: S.currentMosaicSize === R }]),
+                    title: `${xt(s)("screenshot.brush")} ${R * 3}px`
                   }, [
-                    A(
+                    D(
                       "div",
                       {
                         class: "mosaic-preview",
-                        style: xt({
-                          width: `${Math.min(C * 1.5, 24)}px`,
-                          height: `${Math.min(C * 1.5, 24)}px`,
+                        style: wt({
+                          width: `${Math.min(R * 1.5, 24)}px`,
+                          height: `${Math.min(R * 1.5, 24)}px`,
                           backgroundColor: "rgba(100, 100, 100, 0.5)",
                           borderRadius: "50%"
                         })
@@ -3741,32 +3772,32 @@ const dn = kt("arrow-left-up", !0, function(o) {
                   /* STABLE_FRAGMENT */
                 ))
               ])
-            ])) : _("v-if", !0),
-            _(" 翻译引擎选择 "),
-            b.value ? (j(), K("div", Zn, [
-              A("div", Gn, [
-                (j(!0), K(
+            ])) : N("v-if", !0),
+            N(" 翻译引擎选择 "),
+            b.value ? (Z(), K("div", Zn, [
+              D("div", qn, [
+                (Z(!0), K(
                   Tt,
                   null,
-                  Rt(c.value, (C) => (j(), K("button", {
-                    key: C.value,
-                    onClick: (dt) => ot(C.value),
-                    class: bt(["engine-btn", { active: S.currentTranslateEngine === C.value }]),
-                    title: C.label
-                  }, Lt(C.short), 11, qn))),
+                  Rt(c.value, (R) => (Z(), K("button", {
+                    key: R.value,
+                    onClick: (gt) => st(R.value),
+                    class: St(["engine-btn", { active: S.currentTranslateEngine === R.value }]),
+                    title: R.label
+                  }, Yt(R.short), 11, Gn))),
                   128
                   /* KEYED_FRAGMENT */
                 ))
               ])
-            ])) : _("v-if", !0)
+            ])) : N("v-if", !0)
           ])
-        ])) : _("v-if", !0)
+        ])) : N("v-if", !0)
       ],
       512
       /* NEED_PATCH */
     ));
   }
-}), Jn = /* @__PURE__ */ oe(Kn, [["__scopeId", "data-v-5f586fc3"]]), Qn = {
+}), Jn = /* @__PURE__ */ oe(Kn, [["__scopeId", "data-v-52aabc4b"]]), Qn = {
   class: "screenshot-container",
   ref: "containerRef"
 }, ti = {
@@ -3778,20 +3809,17 @@ const dn = kt("arrow-left-up", !0, function(o) {
 }, ni = { class: "size-text" }, ii = {
   key: 4,
   class: "loading-overlay"
-}, si = {
-  key: 5,
-  class: "instructions"
-}, oi = { class: "hint" }, ai = /* @__PURE__ */ ne({
+}, si = /* @__PURE__ */ ne({
   __name: "index",
   setup(o) {
     const t = ht(), e = ht(), n = ht(null), i = ht(null);
     let s = null;
-    const a = ht(!0), r = ht(!1), l = ht(""), c = ht({ x: 0, y: 0 }), u = ht(!1), g = ht("bing"), w = ht({ width: 510, height: 48 });
+    const a = ht(!0), r = ht(!1), l = ht(""), c = ht({ x: 0, y: 0 }), d = ht(!1), g = ht("bing"), w = ht({ width: 510, height: 48 });
     let p = !1;
     const x = ht({
       selectionRect: null,
       annotations: [],
-      currentTool: d.Select,
+      currentTool: u.Select,
       currentStyle: { color: "#ff4444", lineWidth: 3 },
       textSize: 16,
       mosaicSize: 5,
@@ -3800,7 +3828,7 @@ const dn = kt("arrow-left-up", !0, function(o) {
       selectedAnnotation: null,
       isDrawing: !1
       // 将绘制状态也放到响应式状态中
-    }), v = ht(), R = ht(), $ = ct(() => x.value.isDrawing), H = ct(() => {
+    }), v = ht(), C = ht(), E = ht(), A = dt(() => x.value.isDrawing), b = dt(() => {
       if (!x.value.selectionRect) return {};
       const { y: h } = x.value.selectionRect;
       return {
@@ -3809,7 +3837,7 @@ const dn = kt("arrow-left-up", !0, function(o) {
         right: "0",
         height: `${h}px`
       };
-    }), b = ct(() => {
+    }), I = dt(() => {
       if (!x.value.selectionRect) return {};
       const { y: h, height: k } = x.value.selectionRect;
       return {
@@ -3818,139 +3846,139 @@ const dn = kt("arrow-left-up", !0, function(o) {
         right: "0",
         bottom: "0"
       };
-    }), L = ct(() => {
+    }), L = dt(() => {
       if (!x.value.selectionRect) return {};
-      const { x: h, y: k, height: F } = x.value.selectionRect;
+      const { x: h, y: k, height: J } = x.value.selectionRect;
       return {
         top: `${k}px`,
         left: "0",
         width: `${h}px`,
-        height: `${F}px`
+        height: `${J}px`
       };
-    }), D = ct(() => {
+    }), B = dt(() => {
       if (!x.value.selectionRect) return {};
-      const { x: h, y: k, width: F, height: Z } = x.value.selectionRect;
+      const { x: h, y: k, width: J, height: _ } = x.value.selectionRect;
       return {
         top: `${k}px`,
-        left: `${h + F}px`,
+        left: `${h + J}px`,
         right: "0",
-        height: `${Z}px`
+        height: `${_}px`
       };
-    }), W = ct(() => {
+    }), F = dt(() => {
       if (!x.value.selectionRect) return {};
-      const { x: h, y: k, height: F } = x.value.selectionRect, Z = 8, et = Math.min(w.value.width, Math.max(0, window.innerWidth - Z * 2)), Q = Math.min(w.value.height, Math.max(0, window.innerHeight - Z * 2)), gt = Math.max(Z, window.innerHeight - Q - Z), it = Math.max(Z, window.innerWidth - et - Z);
-      let G;
-      return k + F + Q + Z <= window.innerHeight ? G = k + F + Z : k - Q - Z >= Z ? G = k - Q - Z : G = k + F - Q - Z, G = Math.min(Math.max(G, Z), gt), {
-        left: `${Math.min(Math.max(h, Z), it)}px`,
-        top: `${G}px`
+      const { x: h, y: k, height: J } = x.value.selectionRect, _ = 8, it = Math.min(w.value.width, Math.max(0, window.innerWidth - _ * 2)), rt = Math.min(w.value.height, Math.max(0, window.innerHeight - _ * 2)), et = Math.max(_, window.innerHeight - rt - _), G = Math.max(_, window.innerWidth - it - _);
+      let ut;
+      return k + J + rt + _ <= window.innerHeight ? ut = k + J + _ : k - rt - _ >= _ ? ut = k - rt - _ : ut = k + J - rt - _, ut = Math.min(Math.max(ut, _), et), {
+        left: `${Math.min(Math.max(h, _), G)}px`,
+        top: `${ut}px`
       };
-    }), Y = ct(() => {
+    }), T = dt(() => {
       if (!x.value.selectionRect) return {};
-      const { x: h, y: k, width: F, height: Z } = x.value.selectionRect, et = 10;
-      let Q = h - et, gt = k - et, it = "translateY(-100%)";
-      return Q < 10 && (Q = h + F + et, it = "translateY(-100%)"), gt < 30 && (gt = k + Z + et, it = "translateY(0)"), {
-        left: `${Q}px`,
-        top: `${gt}px`,
-        transform: it
+      const { x: h, y: k, width: J, height: _ } = x.value.selectionRect, it = 10;
+      let rt = h - it, et = k - it, G = "translateY(-100%)";
+      return rt < 10 && (rt = h + J + it, G = "translateY(-100%)"), et < 30 && (et = k + _ + it, G = "translateY(0)"), {
+        left: `${rt}px`,
+        top: `${et}px`,
+        transform: G
       };
-    }), z = ct(() => {
+    }), H = dt(() => {
       if (!x.value.selectionRect) return "";
       const { width: h, height: k } = x.value.selectionRect;
       return `${Math.round(h)} × ${Math.round(k)}`;
-    }), N = ct(() => {
+    }), P = dt(() => {
       const h = x.value.textSize + 20;
       return {
         left: `${c.value.x}px`,
         top: `${c.value.y - h / 2}px`
       };
-    }), E = (h) => {
-      if (h === d.Pin && x.value.selectionRect) {
-        O();
-        return;
-      }
-      if (h === d.Ocr && x.value.selectionRect) {
+    }), V = (h) => {
+      if (h === u.Pin && x.value.selectionRect) {
         U();
         return;
       }
+      if (h === u.Ocr && x.value.selectionRect) {
+        Y();
+        return;
+      }
       s?.setTool(h);
-    }, O = async () => {
+    }, U = async () => {
       try {
         await s?.createPinWindow();
       } catch (h) {
-        P.error("[截图] 创建贴图失败", h);
+        W.error("[截图] 创建贴图失败", h);
       }
-    }, U = async () => {
+    }, Y = async () => {
       try {
         await s?.createOcrPinWindow();
       } catch (h) {
-        P.error("[截图] 创建文字识别贴图失败", h);
+        W.error("[截图] 创建文字识别贴图失败", h);
       }
-    }, V = (h) => {
+    }, st = (h) => {
       s?.updateStyle({ color: h });
-    }, ot = (h) => {
-      s?.updateStyle({ lineWidth: h });
     }, X = (h) => {
+      s?.updateStyle({ lineWidth: h });
+    }, z = (h) => {
       s?.updateTextSize(h);
-    }, T = (h) => {
+    }, O = (h) => {
       s?.updateMosaicSize(h);
-    }, B = (h) => {
+    }, Q = (h) => {
       g.value = h, s?.setTranslationEngine(h), s?.executeTranslation();
     }, tt = () => {
       s?.undoAnnotation();
-    }, nt = () => {
-      s?.redoAnnotation();
     }, S = () => {
+      s?.redoAnnotation();
+    }, q = () => {
       s?.deleteSelectedAnnotation();
-    }, J = async () => {
+    }, R = async () => {
       try {
-        await s?.processScreenshot("save"), yt();
+        await s?.processScreenshot("save"), f();
       } catch (h) {
         const k = h?.message || h?.toString() || "保存失败";
         if (k.includes("保存已取消") || k.includes("cancelled"))
           return;
-        P.error("保存截图时发生错误", k);
+        W.error("保存截图时发生错误", k);
       }
-    }, C = async () => {
+    }, gt = async () => {
       try {
-        await s?.processScreenshot("copy"), yt();
+        await s?.processScreenshot("copy"), f();
       } catch {
       }
-    }, dt = () => {
-      yt();
+    }, yt = () => {
+      f();
     };
-    let at = null;
-    const wt = (h, k) => {
+    let nt = null;
+    const ct = (h, k) => {
       if (k && k.getData().type === "text") {
-        const F = k.getData();
+        const J = k.getData();
         c.value = {
-          x: F.points[0].x,
-          y: F.points[0].y
+          x: J.points[0].x,
+          y: J.points[0].y
         };
       } else
         c.value = h;
-      r.value = !0, at = k || null, k && s?.setEditingAnnotation(k), k && k.getData().text ? l.value = k.getData().text : l.value = "", Ft(() => {
-        e.value?.focus(), at && e.value?.select();
+      r.value = !0, nt = k || null, k && s?.setEditingAnnotation(k), k && k.getData().text ? l.value = k.getData().text : l.value = "", Vt(() => {
+        e.value?.focus(), nt && e.value?.select();
       });
-    }, st = () => {
-      l.value.trim() ? at ? s?.updateTextAnnotation(at, l.value) : s?.createTextAnnotation(c.value, l.value) : at && s?.deleteAnnotation(at), ut();
-    }, ut = () => {
-      r.value = !1, l.value = "", at && s?.clearEditingAnnotation(), at = null;
-    }, _t = (h) => {
+    }, ft = () => {
+      l.value.trim() ? nt ? s?.updateTextAnnotation(nt, l.value) : s?.createTextAnnotation(c.value, l.value) : nt && s?.deleteAnnotation(nt), Ct();
+    }, Ct = () => {
+      r.value = !1, l.value = "", nt && s?.clearEditingAnnotation(), nt = null;
+    }, Et = (h) => {
       navigator.clipboard && navigator.clipboard.writeText(h.hex).catch((k) => {
-        P.error("[截图] 复制颜色到剪贴板失败", k);
+        W.error("[截图] 复制颜色到剪贴板失败", k);
       });
-    }, Ht = (h) => {
+    }, Dt = (h) => {
       if (h.key === "Meta" || h.key === "Win" || h.altKey && h.key === "Tab" || h.altKey && h.key === "F4") {
         h.preventDefault(), h.stopPropagation();
         return;
       }
       if (r.value && document.activeElement === e.value) {
         if (h.key === "Escape") {
-          ut(), h.preventDefault();
+          Ct(), h.preventDefault();
           return;
         }
         if (h.key === "Enter") {
-          st(), h.preventDefault();
+          ft(), h.preventDefault();
           return;
         }
         if (h.key === "Tab") {
@@ -3961,7 +3989,7 @@ const dn = kt("arrow-left-up", !0, function(o) {
       }
       if (!x.value.selectionRect) {
         if (h.key === "Escape") {
-          yt();
+          f();
           return;
         }
         h.preventDefault(), h.stopPropagation();
@@ -3973,37 +4001,37 @@ const dn = kt("arrow-left-up", !0, function(o) {
       }
       const k = navigator.platform.toLowerCase().includes("mac");
       if ((k ? h.metaKey : h.ctrlKey) && h.key.toLowerCase() === "z") {
-        h.shiftKey ? nt() : tt(), h.preventDefault();
+        h.shiftKey ? S() : tt(), h.preventDefault();
         return;
       }
       if (!k && h.ctrlKey && h.key.toLowerCase() === "y") {
-        nt(), h.preventDefault();
-        return;
-      }
-      if (h.key === "Escape") {
-        yt();
-        return;
-      } else if (h.key === "Delete" || h.key === "Backspace") {
         S(), h.preventDefault();
         return;
       }
+      if (h.key === "Escape") {
+        f();
+        return;
+      } else if (h.key === "Delete" || h.key === "Backspace") {
+        q(), h.preventDefault();
+        return;
+      }
       ["Shift", "Control", "Alt", "Meta"].includes(h.key) || h.preventDefault();
-    }, yt = async () => {
+    }, f = async () => {
       if (!p) {
         p = !0, s?.destroy(), s = null;
         try {
-          await q("cleanup_screenshot_resources");
+          await j("cleanup_screenshot_resources");
         } catch {
           try {
-            await q("clear_screenshot_background");
+            await j("clear_screenshot_background");
           } catch (k) {
-            P.error("[截图] 清理后台缓存失败", k);
+            W.error("[截图] 清理后台缓存失败", k);
           }
         }
         x.value = {
           selectionRect: null,
           annotations: [],
-          currentTool: d.Select,
+          currentTool: u.Select,
           currentStyle: { color: "#ff4444", lineWidth: 3 },
           textSize: 16,
           mosaicSize: 5,
@@ -4011,22 +4039,22 @@ const dn = kt("arrow-left-up", !0, function(o) {
           hasAnnotations: !1,
           selectedAnnotation: null,
           isDrawing: !1
-        }, r.value = !1, l.value = "", at = null, u.value = !1, a.value = !0;
+        }, r.value = !1, l.value = "", nt = null, d.value = !1, a.value = !0;
         try {
-          await q("close_and_destroy_screenshot_window");
+          await j("close_and_destroy_screenshot_window");
         } catch (h) {
-          P.error("[截图] 销毁截图窗口失败，回退到 close()", h), await i.value?.close();
+          W.error("[截图] 销毁截图窗口失败，回退到 close()", h), await i.value?.close();
         } finally {
           p = !1;
         }
       }
-    }, f = () => {
+    }, $ = () => {
       const h = s?.getState();
       h && (x.value = h);
-    }, I = () => {
+    }, ot = () => {
       const h = n.value?.getToolbarSize?.();
       h && (w.value = h);
-    }, lt = (h) => {
+    }, at = (h) => {
       const k = h.detail;
       k && (w.value = k);
     };
@@ -4034,27 +4062,27 @@ const dn = kt("arrow-left-up", !0, function(o) {
       if (t.value) {
         i.value = new se("screenshot"), await i.value.emit("screenshot_ready"), s = new hn(
           t.value,
-          f,
-          wt,
-          _t
+          $,
+          ct,
+          Et
         );
         try {
-          const h = await q("get_translation_engine");
+          const h = await j("get_translation_engine");
           h && ["google", "bing", "offline"].includes(h) && (g.value = h, s?.setTranslationEngine(h));
         } catch (h) {
-          P.error("[截图] 获取翻译引擎设置失败", h);
+          W.error("[截图] 获取翻译引擎设置失败", h);
         }
         try {
-          const h = await q("get_offline_model_activated");
+          const h = await j("get_offline_model_activated");
           s?.setOfflineModelActivated(h);
         } catch (h) {
-          P.error("[截图] 获取离线模型激活状态失败", h);
+          W.error("[截图] 获取离线模型激活状态失败", h);
         }
-        document.addEventListener("keydown", Ht), window.addEventListener("resize", I), window.addEventListener("screenshot-toolbar-resize", lt), R.value = await Vt("background-ready", () => {
+        document.addEventListener("keydown", Dt), window.addEventListener("resize", ot), window.addEventListener("screenshot-toolbar-resize", at), C.value = await Nt("background-ready", () => {
           s?.triggerBackgroundReload();
-        }), R.value = await Vt("screenshot-close-requested", () => {
-          yt();
-        }), v.value = await Vt("tauri://blur", () => {
+        }), E.value = await Nt("screenshot-close-requested", () => {
+          f();
+        }), v.value = await Nt("tauri://blur", () => {
           if (r.value && document.activeElement === e.value)
             return;
           const h = s?.getTranslationState();
@@ -4063,62 +4091,62 @@ const dn = kt("arrow-left-up", !0, function(o) {
               const k = s?.getTranslationState();
               if (k?.isLoading || k?.isVisible)
                 return;
-              yt();
+              f();
             }
           }, 100);
-        }), Ft(I);
+        }), Vt(ot);
       }
     }), ye(() => {
-      s?.destroy(), s = null, document.removeEventListener("keydown", Ht), window.removeEventListener("resize", I), window.removeEventListener("screenshot-toolbar-resize", lt), v.value?.(), R.value?.(), v.value = void 0, R.value = void 0, i.value = null;
-    }), (h, k) => (j(), K(
+      s?.destroy(), s = null, document.removeEventListener("keydown", Dt), window.removeEventListener("resize", ot), window.removeEventListener("screenshot-toolbar-resize", at), v.value?.(), C.value?.(), E.value?.(), v.value = void 0, C.value = void 0, E.value = void 0, i.value = null;
+    }), (h, k) => (Z(), K(
       "div",
       Qn,
       [
-        _(" 遮罩层 "),
-        x.value.selectionRect ? (j(), K("div", ti, [
-          A(
+        N(" 遮罩层 "),
+        x.value.selectionRect ? (Z(), K("div", ti, [
+          D(
             "div",
             {
               class: "mask-top",
-              style: xt(H.value)
+              style: wt(b.value)
             },
             null,
             4
             /* STYLE */
           ),
-          A(
+          D(
             "div",
             {
               class: "mask-bottom",
-              style: xt(b.value)
+              style: wt(I.value)
             },
             null,
             4
             /* STYLE */
           ),
-          A(
+          D(
             "div",
             {
               class: "mask-left",
-              style: xt(L.value)
+              style: wt(L.value)
             },
             null,
             4
             /* STYLE */
           ),
-          A(
+          D(
             "div",
             {
               class: "mask-right",
-              style: xt(D.value)
+              style: wt(B.value)
             },
             null,
             4
             /* STYLE */
           )
-        ])) : (j(), K("div", ei)),
-        _(" 画布 "),
-        A(
+        ])) : (Z(), K("div", ei)),
+        N(" 画布 "),
+        D(
           "canvas",
           {
             ref_key: "canvasRef",
@@ -4129,32 +4157,32 @@ const dn = kt("arrow-left-up", !0, function(o) {
           512
           /* NEED_PATCH */
         ),
-        _(" 尺寸信息 "),
-        x.value.selectionRect && a.value ? (j(), K(
+        N(" 尺寸信息 "),
+        x.value.selectionRect && a.value ? (Z(), K(
           "div",
           {
             key: 2,
             class: "size-info",
-            style: xt(Y.value)
+            style: wt(T.value)
           },
           [
-            A(
+            D(
               "span",
               ni,
-              Lt(z.value),
+              Yt(H.value),
               1
               /* TEXT */
             )
           ],
           4
           /* STYLE */
-        )) : _("v-if", !0),
-        _(" 工具栏 "),
-        x.value.selectionRect && !$.value ? (j(), ie(Jn, {
+        )) : N("v-if", !0),
+        N(" 工具栏 "),
+        x.value.selectionRect && !A.value ? (Z(), ie(Jn, {
           key: 3,
           ref_key: "toolbarRef",
           ref: n,
-          style: xt(W.value),
+          style: wt(F.value),
           class: "toolbar",
           "current-tool": x.value.currentTool,
           "current-color": x.value.currentStyle.color,
@@ -4164,79 +4192,62 @@ const dn = kt("arrow-left-up", !0, function(o) {
           "can-undo": x.value.hasAnnotations,
           "can-delete": !!x.value.selectedAnnotation,
           "current-translate-engine": g.value,
-          onToolSelect: E,
-          onColorChange: V,
-          onLineWidthChange: ot,
-          onTextSizeChange: X,
-          onMosaicSizeChange: T,
-          onTranslateEngineChange: B,
+          onToolSelect: V,
+          onColorChange: st,
+          onLineWidthChange: X,
+          onTextSizeChange: z,
+          onMosaicSizeChange: O,
+          onTranslateEngineChange: Q,
           onUndo: tt,
-          onDelete: S,
-          onSave: J,
-          onConfirm: C,
-          onCancel: dt
-        }, null, 8, ["style", "current-tool", "current-color", "current-line-width", "current-text-size", "current-mosaic-size", "can-undo", "can-delete", "current-translate-engine"])) : _("v-if", !0),
-        _(" 加载提示 - 仅在初始化时显示 "),
-        u.value ? (j(), K("div", ii, [
-          k[1] || (k[1] = A(
+          onDelete: q,
+          onSave: R,
+          onConfirm: gt,
+          onCancel: yt
+        }, null, 8, ["style", "current-tool", "current-color", "current-line-width", "current-text-size", "current-mosaic-size", "can-undo", "can-delete", "current-translate-engine"])) : N("v-if", !0),
+        N(" 加载提示 - 仅在初始化时显示 "),
+        d.value ? (Z(), K("div", ii, [
+          k[1] || (k[1] = D(
             "div",
             { class: "loading-spinner" },
             null,
             -1
             /* HOISTED */
           )),
-          A(
+          D(
             "p",
             null,
-            Lt(h.$t("screenshotTool.loading")),
+            Yt(h.$t("screenshotTool.loading")),
             1
             /* TEXT */
           )
-        ])) : _("v-if", !0),
-        _(" 提示信息 "),
-        !x.value.selectionRect && !u.value ? (j(), K("div", si, [
-          A(
-            "p",
-            null,
-            Lt(h.$t("screenshotTool.dragToSelect")),
-            1
-            /* TEXT */
-          ),
-          A(
-            "p",
-            oi,
-            Lt(h.$t("screenshotTool.pressEscToClose")),
-            1
-            /* TEXT */
-          )
-        ])) : _("v-if", !0),
-        _(" 文字输入框 "),
-        r.value ? (j(), K(
+        ])) : N("v-if", !0),
+        N(" 文字输入框 "),
+        r.value ? (Z(), K(
           "div",
           {
-            key: 6,
+            key: 5,
             class: "text-input-container",
-            style: xt(N.value)
+            style: wt(P.value)
           },
           [
-            pe(A(
+            pe(D(
               "input",
               {
                 ref_key: "textInputRef",
                 ref: e,
-                "onUpdate:modelValue": k[0] || (k[0] = (F) => l.value = F),
+                "onUpdate:modelValue": k[0] || (k[0] = (J) => l.value = J),
                 type: "text",
                 class: "text-input",
-                style: xt({
+                style: wt({
                   color: x.value.currentStyle.color,
                   fontSize: x.value.textSize + "px",
                   borderColor: x.value.currentStyle.color
                 }),
                 onKeydown: [
-                  Gt(st, ["enter"]),
-                  Gt(ut, ["escape"])
+                  qt(ft, ["enter"]),
+                  qt(Ct, ["escape"])
                 ],
-                onBlur: st,
+                onBlur: ft,
                 autofocus: ""
               },
               null,
@@ -4248,13 +4259,13 @@ const dn = kt("arrow-left-up", !0, function(o) {
           ],
           4
           /* STYLE */
-        )) : _("v-if", !0)
+        )) : N("v-if", !0)
       ],
       512
       /* NEED_PATCH */
     ));
   }
-}), hi = /* @__PURE__ */ oe(ai, [["__scopeId", "data-v-40f1d1c6"]]);
+}), li = /* @__PURE__ */ oe(si, [["__scopeId", "data-v-77c8952b"]]);
 export {
-  hi as default
+  li as default
 };
