@@ -4249,7 +4249,7 @@ class Jr {
     const i = Math.max(t / 2, 2), s = i * 2 + 4, o = s / 2, a = `
       <svg width="${s}" height="${s}" xmlns="http://www.w3.org/2000/svg">
         <!-- 外圈：显示工具大小 -->
-        <circle cx="${o}" cy="${o}" r="${i}" 
+        <circle cx="${o}" cy="${o}" r="${i}"
                 fill="none" stroke="${n}" stroke-width="1.5" opacity="0.8"/>
         <!-- 中心点：精确定位 -->
         <circle cx="${o}" cy="${o}" r="1" fill="${n}" opacity="0.9"/>
