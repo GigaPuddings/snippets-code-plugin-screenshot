@@ -9141,7 +9141,7 @@ const uu = { class: "toolbar-panel first-panel" }, hu = { class: "tool-section" 
   for (const [i, s] of t)
     n[i] = s;
   return n;
-}, eh = /* @__PURE__ */ Qn(th, [["__scopeId", "data-v-a11e0dc4"]]), nh = {
+}, eh = /* @__PURE__ */ Qn(th, [["__scopeId", "data-v-dc3e37ec"]]), nh = {
   class: "screenshot-container",
   ref: "containerRef"
 }, ih = {
