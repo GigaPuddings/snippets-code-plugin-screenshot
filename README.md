@@ -3,7 +3,7 @@
 Official installable plugin package for Snippets Code.
 
 - Plugin ID: `screenshot`
-- Version: `2.0.7`
+- Version: `2.0.8`
 - Source: `docs/plugin-packages/screenshot`
 - App compatibility: `>=1.5.6`
 
@@ -16,7 +16,7 @@ https://github.com/GigaPuddings/snippets-code-plugin-screenshot/archive/refs/hea
 Versioned release URL:
 
 ```text
-https://github.com/GigaPuddings/snippets-code-plugin-screenshot/archive/refs/tags/2.0.7.zip
+https://github.com/GigaPuddings/snippets-code-plugin-screenshot/archive/refs/tags/2.0.8.zip
 ```
 
 This repository is synchronized from the main application repository by
